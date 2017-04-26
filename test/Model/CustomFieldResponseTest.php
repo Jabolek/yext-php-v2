@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhotoTest
+ * CustomFieldResponseTest
  *
  * PHP version 5
  *
@@ -42,17 +42,17 @@
 namespace Yext\Client;
 
 /**
- * LocationPhotoTest Class Doc Comment
+ * CustomFieldResponseTest Class Doc Comment
  *
  * @category    Class */
-// * @description LocationPhoto
+// * @description CustomFieldResponse
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhotoTest extends \PHPUnit_Framework_TestCase
+class CustomFieldResponseTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -88,57 +88,25 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "LocationPhoto"
+     * Test "CustomFieldResponse"
      */
-    public function testLocationPhoto()
+    public function testCustomFieldResponse()
     {
 
     }
 
     /**
-     * Test attribute "derivatives"
+     * Test attribute "meta"
      */
-    public function testPropertyDerivatives()
+    public function testPropertyMeta()
     {
 
     }
 
     /**
-     * Test attribute "description"
+     * Test attribute "response"
      */
-    public function testPropertyDescription()
-    {
-
-    }
-
-    /**
-     * Test attribute "url"
-     */
-    public function testPropertyUrl()
-    {
-
-    }
-
-    /**
-     * Test attribute "height"
-     */
-    public function testPropertyHeight()
-    {
-
-    }
-
-    /**
-     * Test attribute "width"
-     */
-    public function testPropertyWidth()
-    {
-
-    }
-
-    /**
-     * Test attribute "alternate_text"
-     */
-    public function testPropertyAlternateText()
+    public function testPropertyResponse()
     {
 
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhotoTest
+ * CustomValidationTest
  *
  * PHP version 5
  *
@@ -42,17 +42,17 @@
 namespace Yext\Client;
 
 /**
- * LocationPhotoTest Class Doc Comment
+ * CustomValidationTest Class Doc Comment
  *
  * @category    Class */
-// * @description LocationPhoto
+// * @description A Custom Field validation object, describing validation rules when a Custom Field value is set or updated.
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhotoTest extends \PHPUnit_Framework_TestCase
+class CustomValidationTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -88,57 +88,97 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "LocationPhoto"
+     * Test "CustomValidation"
      */
-    public function testLocationPhoto()
+    public function testCustomValidation()
     {
 
     }
 
     /**
-     * Test attribute "derivatives"
+     * Test attribute "max_date"
      */
-    public function testPropertyDerivatives()
+    public function testPropertyMaxDate()
     {
 
     }
 
     /**
-     * Test attribute "description"
+     * Test attribute "min_height"
      */
-    public function testPropertyDescription()
+    public function testPropertyMinHeight()
     {
 
     }
 
     /**
-     * Test attribute "url"
+     * Test attribute "max_value"
      */
-    public function testPropertyUrl()
+    public function testPropertyMaxValue()
     {
 
     }
 
     /**
-     * Test attribute "height"
+     * Test attribute "min_value"
      */
-    public function testPropertyHeight()
+    public function testPropertyMinValue()
     {
 
     }
 
     /**
-     * Test attribute "width"
+     * Test attribute "min_width"
      */
-    public function testPropertyWidth()
+    public function testPropertyMinWidth()
     {
 
     }
 
     /**
-     * Test attribute "alternate_text"
+     * Test attribute "min_char_length"
      */
-    public function testPropertyAlternateText()
+    public function testPropertyMinCharLength()
+    {
+
+    }
+
+    /**
+     * Test attribute "max_item_count"
+     */
+    public function testPropertyMaxItemCount()
+    {
+
+    }
+
+    /**
+     * Test attribute "min_item_count"
+     */
+    public function testPropertyMinItemCount()
+    {
+
+    }
+
+    /**
+     * Test attribute "max_char_length"
+     */
+    public function testPropertyMaxCharLength()
+    {
+
+    }
+
+    /**
+     * Test attribute "aspect_ratio"
+     */
+    public function testPropertyAspectRatio()
+    {
+
+    }
+
+    /**
+     * Test attribute "min_date"
+     */
+    public function testPropertyMinDate()
     {
 
     }

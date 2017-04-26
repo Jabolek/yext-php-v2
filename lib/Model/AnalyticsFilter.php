@@ -72,7 +72,7 @@ class AnalyticsFilter implements ArrayAccess
         'instagram_content_type' => 'string',
         'google_action_type' => 'string[]',
         'google_query_type' => 'string[]',
-        'platforms' => 'string[]',
+        'listings_live_type' => 'string',
         'search_term' => 'string',
         'partners' => 'float[]',
         'search_type' => 'string',
@@ -80,6 +80,7 @@ class AnalyticsFilter implements ArrayAccess
         'frequent_words' => 'string[]',
         'foursquare_checkin_time_of_day' => 'string',
         'ratings' => 'int[]',
+        'page_types' => 'string[]',
         'foursquare_checkin_gender' => 'string',
         'foursquare_checkin_type' => 'string',
         'hours' => 'float[]',
@@ -87,7 +88,9 @@ class AnalyticsFilter implements ArrayAccess
         'folder_id' => 'int',
         'location_ids' => 'string[]',
         'countries' => 'string[]',
-        'min_search_frequency' => 'double'
+        'min_search_frequency' => 'double',
+        'publisher_suggestion_type' => 'string[]',
+        'platforms' => 'string[]'
     ];
 
     public static function swaggerTypes()
@@ -106,7 +109,7 @@ class AnalyticsFilter implements ArrayAccess
         'instagram_content_type' => 'instagramContentType',
         'google_action_type' => 'googleActionType',
         'google_query_type' => 'googleQueryType',
-        'platforms' => 'platforms',
+        'listings_live_type' => 'listingsLiveType',
         'search_term' => 'searchTerm',
         'partners' => 'partners',
         'search_type' => 'searchType',
@@ -114,6 +117,7 @@ class AnalyticsFilter implements ArrayAccess
         'frequent_words' => 'frequentWords',
         'foursquare_checkin_time_of_day' => 'foursquareCheckinTimeOfDay',
         'ratings' => 'ratings',
+        'page_types' => 'pageTypes',
         'foursquare_checkin_gender' => 'foursquareCheckinGender',
         'foursquare_checkin_type' => 'foursquareCheckinType',
         'hours' => 'hours',
@@ -121,7 +125,9 @@ class AnalyticsFilter implements ArrayAccess
         'folder_id' => 'folderId',
         'location_ids' => 'locationIds',
         'countries' => 'countries',
-        'min_search_frequency' => 'minSearchFrequency'
+        'min_search_frequency' => 'minSearchFrequency',
+        'publisher_suggestion_type' => 'publisherSuggestionType',
+        'platforms' => 'platforms'
     ];
 
 
@@ -136,7 +142,7 @@ class AnalyticsFilter implements ArrayAccess
         'instagram_content_type' => 'setInstagramContentType',
         'google_action_type' => 'setGoogleActionType',
         'google_query_type' => 'setGoogleQueryType',
-        'platforms' => 'setPlatforms',
+        'listings_live_type' => 'setListingsLiveType',
         'search_term' => 'setSearchTerm',
         'partners' => 'setPartners',
         'search_type' => 'setSearchType',
@@ -144,6 +150,7 @@ class AnalyticsFilter implements ArrayAccess
         'frequent_words' => 'setFrequentWords',
         'foursquare_checkin_time_of_day' => 'setFoursquareCheckinTimeOfDay',
         'ratings' => 'setRatings',
+        'page_types' => 'setPageTypes',
         'foursquare_checkin_gender' => 'setFoursquareCheckinGender',
         'foursquare_checkin_type' => 'setFoursquareCheckinType',
         'hours' => 'setHours',
@@ -151,7 +158,9 @@ class AnalyticsFilter implements ArrayAccess
         'folder_id' => 'setFolderId',
         'location_ids' => 'setLocationIds',
         'countries' => 'setCountries',
-        'min_search_frequency' => 'setMinSearchFrequency'
+        'min_search_frequency' => 'setMinSearchFrequency',
+        'publisher_suggestion_type' => 'setPublisherSuggestionType',
+        'platforms' => 'setPlatforms'
     ];
 
 
@@ -166,7 +175,7 @@ class AnalyticsFilter implements ArrayAccess
         'instagram_content_type' => 'getInstagramContentType',
         'google_action_type' => 'getGoogleActionType',
         'google_query_type' => 'getGoogleQueryType',
-        'platforms' => 'getPlatforms',
+        'listings_live_type' => 'getListingsLiveType',
         'search_term' => 'getSearchTerm',
         'partners' => 'getPartners',
         'search_type' => 'getSearchType',
@@ -174,6 +183,7 @@ class AnalyticsFilter implements ArrayAccess
         'frequent_words' => 'getFrequentWords',
         'foursquare_checkin_time_of_day' => 'getFoursquareCheckinTimeOfDay',
         'ratings' => 'getRatings',
+        'page_types' => 'getPageTypes',
         'foursquare_checkin_gender' => 'getFoursquareCheckinGender',
         'foursquare_checkin_type' => 'getFoursquareCheckinType',
         'hours' => 'getHours',
@@ -181,7 +191,9 @@ class AnalyticsFilter implements ArrayAccess
         'folder_id' => 'getFolderId',
         'location_ids' => 'getLocationIds',
         'countries' => 'getCountries',
-        'min_search_frequency' => 'getMinSearchFrequency'
+        'min_search_frequency' => 'getMinSearchFrequency',
+        'publisher_suggestion_type' => 'getPublisherSuggestionType',
+        'platforms' => 'getPlatforms'
     ];
 
     public static function attributeMap()
@@ -204,6 +216,14 @@ class AnalyticsFilter implements ArrayAccess
     const GOOGLE_ACTION_TYPE_WEBSITE = 'ACTION_WEBSITE';
     const GOOGLE_QUERY_TYPE_DIRECT = 'QUERIES_DIRECT';
     const GOOGLE_QUERY_TYPE_INDIRECT = 'QUERIES_INDIRECT';
+    const LISTINGS_LIVE_TYPE_CLAIMED = 'CLAIMED';
+    const LISTINGS_LIVE_TYPE_CREATED = 'CREATED';
+    const PAGE_TYPES_STORE = 'STORE';
+    const PAGE_TYPES_DIRECTORY = 'DIRECTORY';
+    const PAGE_TYPES_SEARCH = 'SEARCH';
+    const PUBLISHER_SUGGESTION_TYPE_ACCEPTED = 'ACCEPTED';
+    const PUBLISHER_SUGGESTION_TYPE_REJECTED = 'REJECTED';
+    const PUBLISHER_SUGGESTION_TYPE_NEW = 'NEW';
     
 
     
@@ -232,6 +252,44 @@ class AnalyticsFilter implements ArrayAccess
         ];
     }
     
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getListingsLiveTypeAllowableValues()
+    {
+        return [
+            self::LISTINGS_LIVE_TYPE_CLAIMED,
+            self::LISTINGS_LIVE_TYPE_CREATED,
+        ];
+    }
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getPageTypesAllowableValues()
+    {
+        return [
+            self::PAGE_TYPES_STORE,
+            self::PAGE_TYPES_DIRECTORY,
+            self::PAGE_TYPES_SEARCH,
+        ];
+    }
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getPublisherSuggestionTypeAllowableValues()
+    {
+        return [
+            self::PUBLISHER_SUGGESTION_TYPE_ACCEPTED,
+            self::PUBLISHER_SUGGESTION_TYPE_REJECTED,
+            self::PUBLISHER_SUGGESTION_TYPE_NEW,
+        ];
+    }
+    
 
     /**
      * Associative array for storing property values
@@ -251,7 +309,7 @@ class AnalyticsFilter implements ArrayAccess
         $this->container['instagram_content_type'] = isset($data['instagram_content_type']) ? $data['instagram_content_type'] : null;
         $this->container['google_action_type'] = isset($data['google_action_type']) ? $data['google_action_type'] : null;
         $this->container['google_query_type'] = isset($data['google_query_type']) ? $data['google_query_type'] : null;
-        $this->container['platforms'] = isset($data['platforms']) ? $data['platforms'] : null;
+        $this->container['listings_live_type'] = isset($data['listings_live_type']) ? $data['listings_live_type'] : null;
         $this->container['search_term'] = isset($data['search_term']) ? $data['search_term'] : null;
         $this->container['partners'] = isset($data['partners']) ? $data['partners'] : null;
         $this->container['search_type'] = isset($data['search_type']) ? $data['search_type'] : null;
@@ -259,6 +317,7 @@ class AnalyticsFilter implements ArrayAccess
         $this->container['frequent_words'] = isset($data['frequent_words']) ? $data['frequent_words'] : null;
         $this->container['foursquare_checkin_time_of_day'] = isset($data['foursquare_checkin_time_of_day']) ? $data['foursquare_checkin_time_of_day'] : null;
         $this->container['ratings'] = isset($data['ratings']) ? $data['ratings'] : null;
+        $this->container['page_types'] = isset($data['page_types']) ? $data['page_types'] : null;
         $this->container['foursquare_checkin_gender'] = isset($data['foursquare_checkin_gender']) ? $data['foursquare_checkin_gender'] : null;
         $this->container['foursquare_checkin_type'] = isset($data['foursquare_checkin_type']) ? $data['foursquare_checkin_type'] : null;
         $this->container['hours'] = isset($data['hours']) ? $data['hours'] : null;
@@ -267,6 +326,8 @@ class AnalyticsFilter implements ArrayAccess
         $this->container['location_ids'] = isset($data['location_ids']) ? $data['location_ids'] : null;
         $this->container['countries'] = isset($data['countries']) ? $data['countries'] : null;
         $this->container['min_search_frequency'] = isset($data['min_search_frequency']) ? $data['min_search_frequency'] : null;
+        $this->container['publisher_suggestion_type'] = isset($data['publisher_suggestion_type']) ? $data['publisher_suggestion_type'] : null;
+        $this->container['platforms'] = isset($data['platforms']) ? $data['platforms'] : null;
     }
 
     /**
@@ -277,6 +338,11 @@ class AnalyticsFilter implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+        $allowed_values = ["CLAIMED", "CREATED"];
+        if (!is_null($this->container['listings_live_type']) && !in_array($this->container['listings_live_type'], $allowed_values)) {
+            $invalid_properties[] = "invalid value for 'listings_live_type', must be one of #{allowed_values}.";
+        }
+
         return $invalid_properties;
     }
 
@@ -288,6 +354,10 @@ class AnalyticsFilter implements ArrayAccess
      */
     public function valid()
     {
+        $allowed_values = ["CLAIMED", "CREATED"];
+        if (!is_null($this->container['listings_live_type']) && !in_array($this->container['listings_live_type'], $allowed_values)) {
+            return false;
+        }
         return true;
     }
 
@@ -427,22 +497,26 @@ class AnalyticsFilter implements ArrayAccess
     }
 
     /**
-     * Gets platforms
-     * @return string[]
+     * Gets listings_live_type
+     * @return string
      */
-    public function getPlatforms()
+    public function getListingsLiveType()
     {
-        return $this->container['platforms'];
+        return $this->container['listings_live_type'];
     }
 
     /**
-     * Sets platforms
-     * @param string[] $platforms Array of platform IDs.
+     * Sets listings_live_type
+     * @param string $listings_live_type Specifies the type of listings live that should be included in the report. Can only be used with `LISTINGS_LIVE` metric.
      * @return $this
      */
-    public function setPlatforms($platforms)
+    public function setListingsLiveType($listings_live_type)
     {
-        $this->container['platforms'] = $platforms;
+        $allowed_values = array('CLAIMED', 'CREATED');
+        if (!is_null($listings_live_type) && (!in_array($listings_live_type, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'listings_live_type', must be one of 'CLAIMED', 'CREATED'");
+        }
+        $this->container['listings_live_type'] = $listings_live_type;
 
         return $this;
     }
@@ -590,6 +664,31 @@ class AnalyticsFilter implements ArrayAccess
     public function setRatings($ratings)
     {
         $this->container['ratings'] = $ratings;
+
+        return $this;
+    }
+
+    /**
+     * Gets page_types
+     * @return string[]
+     */
+    public function getPageTypes()
+    {
+        return $this->container['page_types'];
+    }
+
+    /**
+     * Sets page_types
+     * @param string[] $page_types Specifies the Pages page types that should be included in the report. Can only be used with Store Pages metrics
+     * @return $this
+     */
+    public function setPageTypes($page_types)
+    {
+        $allowed_values = array('STORE', 'DIRECTORY', 'SEARCH');
+        if (!is_null($page_types) && (array_diff($page_types, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'page_types', must be one of 'STORE', 'DIRECTORY', 'SEARCH'");
+        }
+        $this->container['page_types'] = $page_types;
 
         return $this;
     }
@@ -758,6 +857,52 @@ class AnalyticsFilter implements ArrayAccess
     public function setMinSearchFrequency($min_search_frequency)
     {
         $this->container['min_search_frequency'] = $min_search_frequency;
+
+        return $this;
+    }
+
+    /**
+     * Gets publisher_suggestion_type
+     * @return string[]
+     */
+    public function getPublisherSuggestionType()
+    {
+        return $this->container['publisher_suggestion_type'];
+    }
+
+    /**
+     * Sets publisher_suggestion_type
+     * @param string[] $publisher_suggestion_type Specifies the types of publisher suggestions that should be included in the report. Can only be used with `PUBLISHER_SUGGESTIONS` metric.
+     * @return $this
+     */
+    public function setPublisherSuggestionType($publisher_suggestion_type)
+    {
+        $allowed_values = array('ACCEPTED', 'REJECTED', 'NEW');
+        if (!is_null($publisher_suggestion_type) && (array_diff($publisher_suggestion_type, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'publisher_suggestion_type', must be one of 'ACCEPTED', 'REJECTED', 'NEW'");
+        }
+        $this->container['publisher_suggestion_type'] = $publisher_suggestion_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets platforms
+     * @return string[]
+     */
+    public function getPlatforms()
+    {
+        return $this->container['platforms'];
+    }
+
+    /**
+     * Sets platforms
+     * @param string[] $platforms Array of platform IDs.
+     * @return $this
+     */
+    public function setPlatforms($platforms)
+    {
+        $this->container['platforms'] = $platforms;
 
         return $this;
     }

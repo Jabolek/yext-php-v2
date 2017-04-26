@@ -1,6 +1,6 @@
 <?php
 /**
- * PublishersResponse
+ * PublishersResponseResponse
  *
  * PHP version 5
  *
@@ -44,7 +44,7 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * PublishersResponse Class Doc Comment
+ * PublishersResponseResponse Class Doc Comment
  *
  * @category    Class */
 /**
@@ -53,21 +53,20 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PublishersResponse implements ArrayAccess
+class PublishersResponseResponse implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PublishersResponse';
+    protected static $swaggerModelName = 'PublishersResponse_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'meta' => '\Yext\Client\Model\ResponseMeta',
-        'response' => '\Yext\Client\Model\PublishersResponseResponse'
+        'publishers' => '\Yext\Client\Model\Publisher[]'
     ];
 
     public static function swaggerTypes()
@@ -80,8 +79,7 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'meta' => 'meta',
-        'response' => 'response'
+        'publishers' => 'publishers'
     ];
 
 
@@ -90,8 +88,7 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'meta' => 'setMeta',
-        'response' => 'setResponse'
+        'publishers' => 'setPublishers'
     ];
 
 
@@ -100,8 +97,7 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'meta' => 'getMeta',
-        'response' => 'getResponse'
+        'publishers' => 'getPublishers'
     ];
 
     public static function attributeMap()
@@ -135,8 +131,7 @@ class PublishersResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
-        $this->container['response'] = isset($data['response']) ? $data['response'] : null;
+        $this->container['publishers'] = isset($data['publishers']) ? $data['publishers'] : null;
     }
 
     /**
@@ -163,43 +158,22 @@ class PublishersResponse implements ArrayAccess
 
 
     /**
-     * Gets meta
-     * @return \Yext\Client\Model\ResponseMeta
+     * Gets publishers
+     * @return \Yext\Client\Model\Publisher[]
      */
-    public function getMeta()
+    public function getPublishers()
     {
-        return $this->container['meta'];
+        return $this->container['publishers'];
     }
 
     /**
-     * Sets meta
-     * @param \Yext\Client\Model\ResponseMeta $meta
+     * Sets publishers
+     * @param \Yext\Client\Model\Publisher[] $publishers
      * @return $this
      */
-    public function setMeta($meta)
+    public function setPublishers($publishers)
     {
-        $this->container['meta'] = $meta;
-
-        return $this;
-    }
-
-    /**
-     * Gets response
-     * @return \Yext\Client\Model\PublishersResponseResponse
-     */
-    public function getResponse()
-    {
-        return $this->container['response'];
-    }
-
-    /**
-     * Sets response
-     * @param \Yext\Client\Model\PublishersResponseResponse $response
-     * @return $this
-     */
-    public function setResponse($response)
-    {
-        $this->container['response'] = $response;
+        $this->container['publishers'] = $publishers;
 
         return $this;
     }

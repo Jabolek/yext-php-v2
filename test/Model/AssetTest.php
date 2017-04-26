@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhotoTest
+ * AssetTest
  *
  * PHP version 5
  *
@@ -42,17 +42,17 @@
 namespace Yext\Client;
 
 /**
- * LocationPhotoTest Class Doc Comment
+ * AssetTest Class Doc Comment
  *
  * @category    Class */
-// * @description LocationPhoto
+// * @description Asset
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhotoTest extends \PHPUnit_Framework_TestCase
+class AssetTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -88,17 +88,17 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "LocationPhoto"
+     * Test "Asset"
      */
-    public function testLocationPhoto()
+    public function testAsset()
     {
 
     }
 
     /**
-     * Test attribute "derivatives"
+     * Test attribute "video_url"
      */
-    public function testPropertyDerivatives()
+    public function testPropertyVideoUrl()
     {
 
     }
@@ -112,25 +112,41 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "url"
+     * Test attribute "for_locations"
      */
-    public function testPropertyUrl()
+    public function testPropertyForLocations()
     {
 
     }
 
     /**
-     * Test attribute "height"
+     * Test attribute "clickthrough_url"
      */
-    public function testPropertyHeight()
+    public function testPropertyClickthroughUrl()
     {
 
     }
 
     /**
-     * Test attribute "width"
+     * Test attribute "labels"
      */
-    public function testPropertyWidth()
+    public function testPropertyLabels()
+    {
+
+    }
+
+    /**
+     * Test attribute "photo_url"
+     */
+    public function testPropertyPhotoUrl()
+    {
+
+    }
+
+    /**
+     * Test attribute "details"
+     */
+    public function testPropertyDetails()
     {
 
     }
@@ -139,6 +155,38 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
      * Test attribute "alternate_text"
      */
     public function testPropertyAlternateText()
+    {
+
+    }
+
+    /**
+     * Test attribute "type"
+     */
+    public function testPropertyType()
+    {
+
+    }
+
+    /**
+     * Test attribute "id"
+     */
+    public function testPropertyId()
+    {
+
+    }
+
+    /**
+     * Test attribute "contents"
+     */
+    public function testPropertyContents()
+    {
+
+    }
+
+    /**
+     * Test attribute "name"
+     */
+    public function testPropertyName()
     {
 
     }

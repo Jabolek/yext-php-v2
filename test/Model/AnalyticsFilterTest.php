@@ -144,9 +144,9 @@ class AnalyticsFilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "platforms"
+     * Test attribute "listings_live_type"
      */
-    public function testPropertyPlatforms()
+    public function testPropertyListingsLiveType()
     {
 
     }
@@ -203,6 +203,14 @@ class AnalyticsFilterTest extends \PHPUnit_Framework_TestCase
      * Test attribute "ratings"
      */
     public function testPropertyRatings()
+    {
+
+    }
+
+    /**
+     * Test attribute "page_types"
+     */
+    public function testPropertyPageTypes()
     {
 
     }
@@ -267,6 +275,22 @@ class AnalyticsFilterTest extends \PHPUnit_Framework_TestCase
      * Test attribute "min_search_frequency"
      */
     public function testPropertyMinSearchFrequency()
+    {
+
+    }
+
+    /**
+     * Test attribute "publisher_suggestion_type"
+     */
+    public function testPropertyPublisherSuggestionType()
+    {
+
+    }
+
+    /**
+     * Test attribute "platforms"
+     */
+    public function testPropertyPlatforms()
     {
 
     }

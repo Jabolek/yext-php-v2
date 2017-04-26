@@ -71,12 +71,14 @@ class Review implements ArrayAccess
         'title' => 'string',
         'url' => 'string',
         'publisher_date' => 'int',
-        'last_yext_update_date' => 'int',
+        'business_id' => 'int',
         'comments' => '\Yext\Client\Model\ReviewComment[]',
         'content' => 'string',
+        'date' => '\DateTime',
         'author_name' => 'string',
         'author_email' => 'string',
         'location_id' => 'string',
+        'last_yext_update_time' => 'int',
         'publisher_id' => 'string',
         'id' => 'int'
     ];
@@ -96,12 +98,14 @@ class Review implements ArrayAccess
         'title' => 'title',
         'url' => 'url',
         'publisher_date' => 'publisherDate',
-        'last_yext_update_date' => 'lastYextUpdateDate',
+        'business_id' => 'businessId',
         'comments' => 'comments',
         'content' => 'content',
+        'date' => 'date',
         'author_name' => 'authorName',
         'author_email' => 'authorEmail',
         'location_id' => 'locationId',
+        'last_yext_update_time' => 'lastYextUpdateTime',
         'publisher_id' => 'publisherId',
         'id' => 'id'
     ];
@@ -117,12 +121,14 @@ class Review implements ArrayAccess
         'title' => 'setTitle',
         'url' => 'setUrl',
         'publisher_date' => 'setPublisherDate',
-        'last_yext_update_date' => 'setLastYextUpdateDate',
+        'business_id' => 'setBusinessId',
         'comments' => 'setComments',
         'content' => 'setContent',
+        'date' => 'setDate',
         'author_name' => 'setAuthorName',
         'author_email' => 'setAuthorEmail',
         'location_id' => 'setLocationId',
+        'last_yext_update_time' => 'setLastYextUpdateTime',
         'publisher_id' => 'setPublisherId',
         'id' => 'setId'
     ];
@@ -138,12 +144,14 @@ class Review implements ArrayAccess
         'title' => 'getTitle',
         'url' => 'getUrl',
         'publisher_date' => 'getPublisherDate',
-        'last_yext_update_date' => 'getLastYextUpdateDate',
+        'business_id' => 'getBusinessId',
         'comments' => 'getComments',
         'content' => 'getContent',
+        'date' => 'getDate',
         'author_name' => 'getAuthorName',
         'author_email' => 'getAuthorEmail',
         'location_id' => 'getLocationId',
+        'last_yext_update_time' => 'getLastYextUpdateTime',
         'publisher_id' => 'getPublisherId',
         'id' => 'getId'
     ];
@@ -200,12 +208,14 @@ class Review implements ArrayAccess
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
         $this->container['url'] = isset($data['url']) ? $data['url'] : null;
         $this->container['publisher_date'] = isset($data['publisher_date']) ? $data['publisher_date'] : null;
-        $this->container['last_yext_update_date'] = isset($data['last_yext_update_date']) ? $data['last_yext_update_date'] : null;
+        $this->container['business_id'] = isset($data['business_id']) ? $data['business_id'] : null;
         $this->container['comments'] = isset($data['comments']) ? $data['comments'] : null;
         $this->container['content'] = isset($data['content']) ? $data['content'] : null;
+        $this->container['date'] = isset($data['date']) ? $data['date'] : null;
         $this->container['author_name'] = isset($data['author_name']) ? $data['author_name'] : null;
         $this->container['author_email'] = isset($data['author_email']) ? $data['author_email'] : null;
         $this->container['location_id'] = isset($data['location_id']) ? $data['location_id'] : null;
+        $this->container['last_yext_update_time'] = isset($data['last_yext_update_time']) ? $data['last_yext_update_time'] : null;
         $this->container['publisher_id'] = isset($data['publisher_id']) ? $data['publisher_id'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
     }
@@ -352,22 +362,22 @@ class Review implements ArrayAccess
     }
 
     /**
-     * Gets last_yext_update_date
+     * Gets business_id
      * @return int
      */
-    public function getLastYextUpdateDate()
+    public function getBusinessId()
     {
-        return $this->container['last_yext_update_date'];
+        return $this->container['business_id'];
     }
 
     /**
-     * Sets last_yext_update_date
-     * @param int $last_yext_update_date This is the timestamp Yext last ingested an update for the review. This is a timestamp from Yext, and it always means the last time this review changed in Yext.
+     * Sets business_id
+     * @param int $business_id ID of the account associated with this review
      * @return $this
      */
-    public function setLastYextUpdateDate($last_yext_update_date)
+    public function setBusinessId($business_id)
     {
-        $this->container['last_yext_update_date'] = $last_yext_update_date;
+        $this->container['business_id'] = $business_id;
 
         return $this;
     }
@@ -410,6 +420,27 @@ class Review implements ArrayAccess
     public function setContent($content)
     {
         $this->container['content'] = $content;
+
+        return $this;
+    }
+
+    /**
+     * Gets date
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->container['date'];
+    }
+
+    /**
+     * Sets date
+     * @param \DateTime $date (`YYYY-MM-DD` format) If provided, the date you received the review from the customer. Defaults to the date the review was uploaded to Yext.
+     * @return $this
+     */
+    public function setDate($date)
+    {
+        $this->container['date'] = $date;
 
         return $this;
     }
@@ -473,6 +504,27 @@ class Review implements ArrayAccess
     public function setLocationId($location_id)
     {
         $this->container['location_id'] = $location_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets last_yext_update_time
+     * @return int
+     */
+    public function getLastYextUpdateTime()
+    {
+        return $this->container['last_yext_update_time'];
+    }
+
+    /**
+     * Sets last_yext_update_time
+     * @param int $last_yext_update_time This is the timestamp Yext last ingested an update for the review. This is a timestamp from Yext, and it always means the last time this review changed in Yext.
+     * @return $this
+     */
+    public function setLastYextUpdateTime($last_yext_update_time)
+    {
+        $this->container['last_yext_update_time'] = $last_yext_update_time;
 
         return $this;
     }

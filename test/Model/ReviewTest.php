@@ -136,9 +136,9 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "last_yext_update_date"
+     * Test attribute "business_id"
      */
-    public function testPropertyLastYextUpdateDate()
+    public function testPropertyBusinessId()
     {
 
     }
@@ -155,6 +155,14 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
      * Test attribute "content"
      */
     public function testPropertyContent()
+    {
+
+    }
+
+    /**
+     * Test attribute "date"
+     */
+    public function testPropertyDate()
     {
 
     }
@@ -179,6 +187,14 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
      * Test attribute "location_id"
      */
     public function testPropertyLocationId()
+    {
+
+    }
+
+    /**
+     * Test attribute "last_yext_update_time"
+     */
+    public function testPropertyLastYextUpdateTime()
     {
 
     }

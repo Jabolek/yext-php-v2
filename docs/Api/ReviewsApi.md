@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 Reviews: Create
 
-Create a new External First Party Review. <br><br>  ## Required fields * **`locationId`** * **`authorName`** * **`rating`** * **`content`** <br><br>  ## Optional fields * **`authorEmail`** * **`status`** <br><br>
+Create a new External First Party Review. <br><br>  ## Required fields * **`locationId`** * **`authorName`** * **`rating`** * **`content`** <br><br>  ## Optional fields * **`authorEmail`** * **`status`** * **`date`** <br><br>
 
 ### Example
 ```php
@@ -305,7 +305,7 @@ $api_instance = new Yext\Client\Api\ReviewsApi();
 $account_id = "account_id_example"; // string | 
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
 $limit = 10; // int | Number of results to return.
-$offset = 0; // int | Number of results to skip. Used to page through results.
+$offset = 0; // int | Number of results to return.
 $location_ids = array("location_ids_example"); // string[] | When provided, only reviews for the requested locations will be returned.  By default, reviews will be returned for all locations subscribed to Review Monitoring.  **Example:** loc123,loc456,loc789
 $folder_id = "folder_id_example"; // string | When provided, only reviews for locations in the given folder and its subfolders will be included in the results.
 $countries = array("countries_example"); // string[] | When present, only reviews for locations in the given countries will be returned. Countries are denoted by ISO 3166 2-letter country codes.
@@ -339,7 +339,7 @@ Name | Type | Description  | Notes
  **account_id** | **string**|  |
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
  **limit** | **int**| Number of results to return. | [optional] [default to 10]
- **offset** | **int**| Number of results to skip. Used to page through results. | [optional] [default to 0]
+ **offset** | **int**| Number of results to return. | [optional] [default to 0]
  **location_ids** | [**string[]**](../Model/string.md)| When provided, only reviews for the requested locations will be returned.  By default, reviews will be returned for all locations subscribed to Review Monitoring.  **Example:** loc123,loc456,loc789 | [optional]
  **folder_id** | **string**| When provided, only reviews for locations in the given folder and its subfolders will be included in the results. | [optional]
  **countries** | [**string[]**](../Model/string.md)| When present, only reviews for locations in the given countries will be returned. Countries are denoted by ISO 3166 2-letter country codes. | [optional]

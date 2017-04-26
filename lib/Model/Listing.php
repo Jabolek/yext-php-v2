@@ -71,6 +71,7 @@ class Listing implements ArrayAccess
         'additional_status' => 'string',
         'listing_url' => 'string',
         'location_id' => 'string',
+        'alternate_brands' => '\Yext\Client\Model\ListingAlternateBrands[]',
         'login_url' => 'string',
         'publisher_id' => 'string',
         'id' => 'string',
@@ -92,6 +93,7 @@ class Listing implements ArrayAccess
         'additional_status' => 'additionalStatus',
         'listing_url' => 'listingUrl',
         'location_id' => 'locationId',
+        'alternate_brands' => 'alternateBrands',
         'login_url' => 'loginUrl',
         'publisher_id' => 'publisherId',
         'id' => 'id',
@@ -109,6 +111,7 @@ class Listing implements ArrayAccess
         'additional_status' => 'setAdditionalStatus',
         'listing_url' => 'setListingUrl',
         'location_id' => 'setLocationId',
+        'alternate_brands' => 'setAlternateBrands',
         'login_url' => 'setLoginUrl',
         'publisher_id' => 'setPublisherId',
         'id' => 'setId',
@@ -126,6 +129,7 @@ class Listing implements ArrayAccess
         'additional_status' => 'getAdditionalStatus',
         'listing_url' => 'getListingUrl',
         'location_id' => 'getLocationId',
+        'alternate_brands' => 'getAlternateBrands',
         'login_url' => 'getLoginUrl',
         'publisher_id' => 'getPublisherId',
         'id' => 'getId',
@@ -204,6 +208,7 @@ class Listing implements ArrayAccess
         $this->container['additional_status'] = isset($data['additional_status']) ? $data['additional_status'] : null;
         $this->container['listing_url'] = isset($data['listing_url']) ? $data['listing_url'] : null;
         $this->container['location_id'] = isset($data['location_id']) ? $data['location_id'] : null;
+        $this->container['alternate_brands'] = isset($data['alternate_brands']) ? $data['alternate_brands'] : null;
         $this->container['login_url'] = isset($data['login_url']) ? $data['login_url'] : null;
         $this->container['publisher_id'] = isset($data['publisher_id']) ? $data['publisher_id'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
@@ -360,6 +365,27 @@ class Listing implements ArrayAccess
     public function setLocationId($location_id)
     {
         $this->container['location_id'] = $location_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets alternate_brands
+     * @return \Yext\Client\Model\ListingAlternateBrands[]
+     */
+    public function getAlternateBrands()
+    {
+        return $this->container['alternate_brands'];
+    }
+
+    /**
+     * Sets alternate_brands
+     * @param \Yext\Client\Model\ListingAlternateBrands[] $alternate_brands List of Publisher's alternate brands where the listing is syndicated (only present if **v** is \"20170420\" or later)
+     * @return $this
+     */
+    public function setAlternateBrands($alternate_brands)
+    {
+        $this->container['alternate_brands'] = $alternate_brands;
 
         return $this;
     }

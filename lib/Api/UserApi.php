@@ -564,7 +564,7 @@ class UserApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\UsersResponse
      */
@@ -582,7 +582,7 @@ class UserApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\UsersResponse, HTTP status code, HTTP response headers (array of strings)
      */

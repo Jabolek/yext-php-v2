@@ -272,7 +272,7 @@ $account_id = "account_id_example"; // string |
 $post_id = "post_id_example"; // string | 
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
 $limit = 100; // int | Number of results to return, up to 100. Default 100.  **Example** 20
-$offset = 0; // int | Number of results to skip. Used to page through results.
+$offset = 0; // int | Number of results to return.
 $type = "type_example"; // string | Determines which type of Comments are returned
 
 try {
@@ -292,7 +292,7 @@ Name | Type | Description  | Notes
  **post_id** | **string**|  |
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
  **limit** | **int**| Number of results to return, up to 100. Default 100.  **Example** 20 | [optional] [default to 100]
- **offset** | **int**| Number of results to skip. Used to page through results. | [optional] [default to 0]
+ **offset** | **int**| Number of results to return. | [optional] [default to 0]
  **type** | **string**| Determines which type of Comments are returned | [optional]
 
 ### Return type
@@ -385,7 +385,7 @@ $api_instance = new Yext\Client\Api\SocialSpringSummerApi();
 $account_id = "account_id_example"; // string | 
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
 $limit = 100; // int | Number of results to return, up to 100. Default 100.  **Example** 20
-$offset = 0; // int | Number of results to skip. Used to page through results.
+$offset = 0; // int | Number of results to return.
 $location_ids = array("location_ids_example"); // string[] | Defaults to all account locations with a PowerListings subscription.  **Example** 123, 456, 789
 $publisher_ids = array("publisher_ids_example"); // string[] | Defaults to all publishers subscribed by account  **Example** FACEBOOK, FOURSQUARE
 $status = "ALL"; // string | Used to filter for Linked Accounts with a particular status.
@@ -406,7 +406,7 @@ Name | Type | Description  | Notes
  **account_id** | **string**|  |
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
  **limit** | **int**| Number of results to return, up to 100. Default 100.  **Example** 20 | [optional] [default to 100]
- **offset** | **int**| Number of results to skip. Used to page through results. | [optional] [default to 0]
+ **offset** | **int**| Number of results to return. | [optional] [default to 0]
  **location_ids** | [**string[]**](../Model/string.md)| Defaults to all account locations with a PowerListings subscription.  **Example** 123, 456, 789 | [optional]
  **publisher_ids** | [**string[]**](../Model/string.md)| Defaults to all publishers subscribed by account  **Example** FACEBOOK, FOURSQUARE | [optional]
  **status** | **string**| Used to filter for Linked Accounts with a particular status. | [optional] [default to ALL]
@@ -447,7 +447,7 @@ $api_instance = new Yext\Client\Api\SocialSpringSummerApi();
 $account_id = "account_id_example"; // string | 
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
 $limit = 100; // int | Number of results to return, up to 100. Default 100.  **Example** 20
-$offset = 0; // int | Number of results to skip. Used to page through results.
+$offset = 0; // int | Number of results to return.
 $location_ids = array("location_ids_example"); // string[] | When provided, only Posts that involve the requested locations will be returned.  By defaults, Posts will be returned for all locations subscribed to Social Posting.  **Example** 123, 456, 789
 $folder_id = "folder_id_example"; // string | When provided, only Posts for locations in the given folder and its subfolders will be included in the results.  **Example** 123
 $countries = array("countries_example"); // string[] | Array of 3166 Alpha-2 country codes. When present, only Posts for locations in the given countries will be returned.  **Example** ['US', 'CA']
@@ -471,7 +471,7 @@ Name | Type | Description  | Notes
  **account_id** | **string**|  |
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
  **limit** | **int**| Number of results to return, up to 100. Default 100.  **Example** 20 | [optional] [default to 100]
- **offset** | **int**| Number of results to skip. Used to page through results. | [optional] [default to 0]
+ **offset** | **int**| Number of results to return. | [optional] [default to 0]
  **location_ids** | [**string[]**](../Model/string.md)| When provided, only Posts that involve the requested locations will be returned.  By defaults, Posts will be returned for all locations subscribed to Social Posting.  **Example** 123, 456, 789 | [optional]
  **folder_id** | **string**| When provided, only Posts for locations in the given folder and its subfolders will be included in the results.  **Example** 123 | [optional]
  **countries** | [**string[]**](../Model/string.md)| Array of 3166 Alpha-2 country codes. When present, only Posts for locations in the given countries will be returned.  **Example** [&#39;US&#39;, &#39;CA&#39;] | [optional]

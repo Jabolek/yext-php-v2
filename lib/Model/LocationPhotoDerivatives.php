@@ -1,6 +1,6 @@
 <?php
 /**
- * PublishersResponse
+ * LocationPhotoDerivatives
  *
  * PHP version 5
  *
@@ -44,30 +44,32 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * PublishersResponse Class Doc Comment
+ * LocationPhotoDerivatives Class Doc Comment
  *
  * @category    Class */
+ // @description If no derivative photos are available, this attribute is omitted rather than empty.
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PublishersResponse implements ArrayAccess
+class LocationPhotoDerivatives implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PublishersResponse';
+    protected static $swaggerModelName = 'LocationPhoto_derivatives';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'meta' => '\Yext\Client\Model\ResponseMeta',
-        'response' => '\Yext\Client\Model\PublishersResponseResponse'
+        'url' => 'string',
+        'width' => 'int',
+        'height' => 'int'
     ];
 
     public static function swaggerTypes()
@@ -80,8 +82,9 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'meta' => 'meta',
-        'response' => 'response'
+        'url' => 'url',
+        'width' => 'width',
+        'height' => 'height'
     ];
 
 
@@ -90,8 +93,9 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'meta' => 'setMeta',
-        'response' => 'setResponse'
+        'url' => 'setUrl',
+        'width' => 'setWidth',
+        'height' => 'setHeight'
     ];
 
 
@@ -100,8 +104,9 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'meta' => 'getMeta',
-        'response' => 'getResponse'
+        'url' => 'getUrl',
+        'width' => 'getWidth',
+        'height' => 'getHeight'
     ];
 
     public static function attributeMap()
@@ -135,8 +140,9 @@ class PublishersResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
-        $this->container['response'] = isset($data['response']) ? $data['response'] : null;
+        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
+        $this->container['width'] = isset($data['width']) ? $data['width'] : null;
+        $this->container['height'] = isset($data['height']) ? $data['height'] : null;
     }
 
     /**
@@ -163,43 +169,64 @@ class PublishersResponse implements ArrayAccess
 
 
     /**
-     * Gets meta
-     * @return \Yext\Client\Model\ResponseMeta
+     * Gets url
+     * @return string
      */
-    public function getMeta()
+    public function getUrl()
     {
-        return $this->container['meta'];
+        return $this->container['url'];
     }
 
     /**
-     * Sets meta
-     * @param \Yext\Client\Model\ResponseMeta $meta
+     * Sets url
+     * @param string $url The URL to derivative image. Derivative images are alternate versions of the original image (e.g., smaller versions used to improve page-load times on your site). They are primarily used with our Pages product.
      * @return $this
      */
-    public function setMeta($meta)
+    public function setUrl($url)
     {
-        $this->container['meta'] = $meta;
+        $this->container['url'] = $url;
 
         return $this;
     }
 
     /**
-     * Gets response
-     * @return \Yext\Client\Model\PublishersResponseResponse
+     * Gets width
+     * @return int
      */
-    public function getResponse()
+    public function getWidth()
     {
-        return $this->container['response'];
+        return $this->container['width'];
     }
 
     /**
-     * Sets response
-     * @param \Yext\Client\Model\PublishersResponseResponse $response
+     * Sets width
+     * @param int $width Derivative photo width.
      * @return $this
      */
-    public function setResponse($response)
+    public function setWidth($width)
     {
-        $this->container['response'] = $response;
+        $this->container['width'] = $width;
+
+        return $this;
+    }
+
+    /**
+     * Gets height
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->container['height'];
+    }
+
+    /**
+     * Sets height
+     * @param int $height Derivative photo height.
+     * @return $this
+     */
+    public function setHeight($height)
+    {
+        $this->container['height'] = $height;
 
         return $this;
     }

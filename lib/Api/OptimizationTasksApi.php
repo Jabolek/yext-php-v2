@@ -110,7 +110,7 @@ class OptimizationTasksApi
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param string $task_ids Comma-separated list of Optimization Task IDs corresponding to Optimization Tasks that should be included in the response.  If no IDs are provided, defaults to all available Optimization Tasks in the account. (optional)
      * @param string $location_id Location ID to be used as a filter.  If no ID is provided, defaults to all Locations in the account. (optional)
-     * @param string $mode When mode is PENDING_ONLY, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is ALL_TASKS, the resulting link will ask the user to complete all specified tasks for all specified locations, regardless of whether they have been completed before, are pending, or are in progress. (optional, default to PENDING_ONLY)
+     * @param string $mode When mode is &#x60;PENDING_ONLY&#x60;, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is &#x60;ALL_TASKS&#x60;, the resulting link will show the user all specified tasks for all specified locations, regardless of their status. If a task has been completed, the user is given the option to update the content they entered when completing the task. (optional, default to PENDING_ONLY)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\OptimizationTaskLinksResponse
      */
@@ -129,7 +129,7 @@ class OptimizationTasksApi
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param string $task_ids Comma-separated list of Optimization Task IDs corresponding to Optimization Tasks that should be included in the response.  If no IDs are provided, defaults to all available Optimization Tasks in the account. (optional)
      * @param string $location_id Location ID to be used as a filter.  If no ID is provided, defaults to all Locations in the account. (optional)
-     * @param string $mode When mode is PENDING_ONLY, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is ALL_TASKS, the resulting link will ask the user to complete all specified tasks for all specified locations, regardless of whether they have been completed before, are pending, or are in progress. (optional, default to PENDING_ONLY)
+     * @param string $mode When mode is &#x60;PENDING_ONLY&#x60;, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is &#x60;ALL_TASKS&#x60;, the resulting link will show the user all specified tasks for all specified locations, regardless of their status. If a task has been completed, the user is given the option to update the content they entered when completing the task. (optional, default to PENDING_ONLY)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\OptimizationTaskLinksResponse, HTTP status code, HTTP response headers (array of strings)
      */

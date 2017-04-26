@@ -219,8 +219,8 @@ class AnalyticsApi
      *
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
-     * @param bool $async Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large (optional)
-     * @param string $callback Optional.  When async&#x3D;true and callback is specified, the provided URL will be called when the report is ready.  The URL must of of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status&#x3D;DONE, contains the URL to download the report data as a text file. (optional)
+     * @param bool $async Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large. (optional)
+     * @param string $callback Optional.  When async&#x3D;true and callback is specified, the provided URL will be called when the report is ready.  The URL must be of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status&#x3D;DONE, contains the URL to download the report data as a text file. (optional)
      * @param \Yext\Client\Model\CreateReportRequestBody $body JSON object containing any filters to be applied to the report (optional)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\CreateReportsResponse
@@ -238,8 +238,8 @@ class AnalyticsApi
      *
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
-     * @param bool $async Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large (optional)
-     * @param string $callback Optional.  When async&#x3D;true and callback is specified, the provided URL will be called when the report is ready.  The URL must of of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status&#x3D;DONE, contains the URL to download the report data as a text file. (optional)
+     * @param bool $async Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large. (optional)
+     * @param string $callback Optional.  When async&#x3D;true and callback is specified, the provided URL will be called when the report is ready.  The URL must be of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status&#x3D;DONE, contains the URL to download the report data as a text file. (optional)
      * @param \Yext\Client\Model\CreateReportRequestBody $body JSON object containing any filters to be applied to the report (optional)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\CreateReportsResponse, HTTP status code, HTTP response headers (array of strings)

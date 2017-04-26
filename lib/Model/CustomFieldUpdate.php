@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhoto
+ * CustomFieldUpdate
  *
  * PHP version 5
  *
@@ -44,7 +44,7 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * LocationPhoto Class Doc Comment
+ * CustomFieldUpdate Class Doc Comment
  *
  * @category    Class */
 /**
@@ -53,25 +53,24 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhoto implements ArrayAccess
+class CustomFieldUpdate implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'LocationPhoto';
+    protected static $swaggerModelName = 'CustomFieldUpdate';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'derivatives' => '\Yext\Client\Model\LocationPhotoDerivatives[]',
         'description' => 'string',
-        'url' => 'string',
-        'height' => 'int',
-        'width' => 'int',
-        'alternate_text' => 'string'
+        'alternate_language_behavior' => 'string',
+        'group' => 'string',
+        'name' => 'string',
+        'options' => '\Yext\Client\Model\CustomOption[]'
     ];
 
     public static function swaggerTypes()
@@ -84,12 +83,11 @@ class LocationPhoto implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'derivatives' => 'derivatives',
         'description' => 'description',
-        'url' => 'url',
-        'height' => 'height',
-        'width' => 'width',
-        'alternate_text' => 'alternateText'
+        'alternate_language_behavior' => 'alternateLanguageBehavior',
+        'group' => 'group',
+        'name' => 'name',
+        'options' => 'options'
     ];
 
 
@@ -98,12 +96,11 @@ class LocationPhoto implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'derivatives' => 'setDerivatives',
         'description' => 'setDescription',
-        'url' => 'setUrl',
-        'height' => 'setHeight',
-        'width' => 'setWidth',
-        'alternate_text' => 'setAlternateText'
+        'alternate_language_behavior' => 'setAlternateLanguageBehavior',
+        'group' => 'setGroup',
+        'name' => 'setName',
+        'options' => 'setOptions'
     ];
 
 
@@ -112,12 +109,11 @@ class LocationPhoto implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'derivatives' => 'getDerivatives',
         'description' => 'getDescription',
-        'url' => 'getUrl',
-        'height' => 'getHeight',
-        'width' => 'getWidth',
-        'alternate_text' => 'getAlternateText'
+        'alternate_language_behavior' => 'getAlternateLanguageBehavior',
+        'group' => 'getGroup',
+        'name' => 'getName',
+        'options' => 'getOptions'
     ];
 
     public static function attributeMap()
@@ -135,8 +131,40 @@ class LocationPhoto implements ArrayAccess
         return self::$getters;
     }
 
+    const GROUP_NONE = 'NONE';
+    const GROUP_GROUP_1 = 'GROUP_1';
+    const GROUP_GROUP_2 = 'GROUP_2';
+    const GROUP_GROUP_3 = 'GROUP_3';
+    const GROUP_GROUP_4 = 'GROUP_4';
+    const GROUP_GROUP_5 = 'GROUP_5';
+    const GROUP_GROUP_6 = 'GROUP_6';
+    const GROUP_GROUP_7 = 'GROUP_7';
+    const GROUP_GROUP_8 = 'GROUP_8';
+    const GROUP_GROUP_9 = 'GROUP_9';
+    const GROUP_GROUP_10 = 'GROUP_10';
     
 
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getGroupAllowableValues()
+    {
+        return [
+            self::GROUP_NONE,
+            self::GROUP_GROUP_1,
+            self::GROUP_GROUP_2,
+            self::GROUP_GROUP_3,
+            self::GROUP_GROUP_4,
+            self::GROUP_GROUP_5,
+            self::GROUP_GROUP_6,
+            self::GROUP_GROUP_7,
+            self::GROUP_GROUP_8,
+            self::GROUP_GROUP_9,
+            self::GROUP_GROUP_10,
+        ];
+    }
     
 
     /**
@@ -151,12 +179,11 @@ class LocationPhoto implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['derivatives'] = isset($data['derivatives']) ? $data['derivatives'] : null;
         $this->container['description'] = isset($data['description']) ? $data['description'] : null;
-        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
-        $this->container['height'] = isset($data['height']) ? $data['height'] : null;
-        $this->container['width'] = isset($data['width']) ? $data['width'] : null;
-        $this->container['alternate_text'] = isset($data['alternate_text']) ? $data['alternate_text'] : null;
+        $this->container['alternate_language_behavior'] = isset($data['alternate_language_behavior']) ? $data['alternate_language_behavior'] : null;
+        $this->container['group'] = isset($data['group']) ? $data['group'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['options'] = isset($data['options']) ? $data['options'] : null;
     }
 
     /**
@@ -167,6 +194,11 @@ class LocationPhoto implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+        $allowed_values = ["NONE", "GROUP_1", "GROUP_2", "GROUP_3", "GROUP_4", "GROUP_5", "GROUP_6", "GROUP_7", "GROUP_8", "GROUP_9", "GROUP_10"];
+        if (!is_null($this->container['group']) && !in_array($this->container['group'], $allowed_values)) {
+            $invalid_properties[] = "invalid value for 'group', must be one of #{allowed_values}.";
+        }
+
         return $invalid_properties;
     }
 
@@ -178,30 +210,13 @@ class LocationPhoto implements ArrayAccess
      */
     public function valid()
     {
+        $allowed_values = ["NONE", "GROUP_1", "GROUP_2", "GROUP_3", "GROUP_4", "GROUP_5", "GROUP_6", "GROUP_7", "GROUP_8", "GROUP_9", "GROUP_10"];
+        if (!is_null($this->container['group']) && !in_array($this->container['group'], $allowed_values)) {
+            return false;
+        }
         return true;
     }
 
-
-    /**
-     * Gets derivatives
-     * @return \Yext\Client\Model\LocationPhotoDerivatives[]
-     */
-    public function getDerivatives()
-    {
-        return $this->container['derivatives'];
-    }
-
-    /**
-     * Sets derivatives
-     * @param \Yext\Client\Model\LocationPhotoDerivatives[] $derivatives
-     * @return $this
-     */
-    public function setDerivatives($derivatives)
-    {
-        $this->container['derivatives'] = $derivatives;
-
-        return $this;
-    }
 
     /**
      * Gets description
@@ -214,7 +229,7 @@ class LocationPhoto implements ArrayAccess
 
     /**
      * Sets description
-     * @param string $description Image description.
+     * @param string $description The Custom Field's description which, if provided, will be shown as a tooltip next to the Custom Field in the Knowledge Manager. Providing a description is highly recommended when creating Apps.
      * @return $this
      */
     public function setDescription($description)
@@ -225,85 +240,89 @@ class LocationPhoto implements ArrayAccess
     }
 
     /**
-     * Gets url
+     * Gets alternate_language_behavior
      * @return string
      */
-    public function getUrl()
+    public function getAlternateLanguageBehavior()
     {
-        return $this->container['url'];
+        return $this->container['alternate_language_behavior'];
     }
 
     /**
-     * Sets url
-     * @param string $url Valid URL to image. Accepted formats: .jpg, .png.  If the image could not be downloaded, or if its URL is invalid, the image will be ignored. The success response will contain a warning message explaining why the image was not stored in the system.
+     * Sets alternate_language_behavior
+     * @param string $alternate_language_behavior Custom Field multi-language profile behavior, which is one of:  `PRIMARY_ONLY`: The Custom Field can only have a value set on its primary language profile.  `OVERRIDABLE`: The Custom Field can have a value set on any alternate language profiles, which will override the primary language profile value when the alternate language profile is requested. When requested, if a value is not set for an alternate language profile, the primary language profile value will be returned.  `LANGUAGE_SPECIFIC`: The Custom Field can have a value set on any alternate language profiles. When requested, if a value is not set for an alternate language profile, no value will be returned.
      * @return $this
      */
-    public function setUrl($url)
+    public function setAlternateLanguageBehavior($alternate_language_behavior)
     {
-        $this->container['url'] = $url;
+        $this->container['alternate_language_behavior'] = $alternate_language_behavior;
 
         return $this;
     }
 
     /**
-     * Gets height
-     * @return int
-     */
-    public function getHeight()
-    {
-        return $this->container['height'];
-    }
-
-    /**
-     * Sets height
-     * @param int $height Original photo height.
-     * @return $this
-     */
-    public function setHeight($height)
-    {
-        $this->container['height'] = $height;
-
-        return $this;
-    }
-
-    /**
-     * Gets width
-     * @return int
-     */
-    public function getWidth()
-    {
-        return $this->container['width'];
-    }
-
-    /**
-     * Sets width
-     * @param int $width Original photo width.
-     * @return $this
-     */
-    public function setWidth($width)
-    {
-        $this->container['width'] = $width;
-
-        return $this;
-    }
-
-    /**
-     * Gets alternate_text
+     * Gets group
      * @return string
      */
-    public function getAlternateText()
+    public function getGroup()
     {
-        return $this->container['alternate_text'];
+        return $this->container['group'];
     }
 
     /**
-     * Sets alternate_text
-     * @param string $alternate_text The alternate text to be used for accessibility purposes.
+     * Sets group
+     * @param string $group The Custom Field's group.
      * @return $this
      */
-    public function setAlternateText($alternate_text)
+    public function setGroup($group)
     {
-        $this->container['alternate_text'] = $alternate_text;
+        $allowed_values = array('NONE', 'GROUP_1', 'GROUP_2', 'GROUP_3', 'GROUP_4', 'GROUP_5', 'GROUP_6', 'GROUP_7', 'GROUP_8', 'GROUP_9', 'GROUP_10');
+        if (!is_null($group) && (!in_array($group, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'group', must be one of 'NONE', 'GROUP_1', 'GROUP_2', 'GROUP_3', 'GROUP_4', 'GROUP_5', 'GROUP_6', 'GROUP_7', 'GROUP_8', 'GROUP_9', 'GROUP_10'");
+        }
+        $this->container['group'] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     * @param string $name The Custom Field's name.
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets options
+     * @return \Yext\Client\Model\CustomOption[]
+     */
+    public function getOptions()
+    {
+        return $this->container['options'];
+    }
+
+    /**
+     * Sets options
+     * @param \Yext\Client\Model\CustomOption[] $options Present if and only if `type` is `SINGLE_OPTION` or `MULTI_OPTION`.  List of options (key/value pairs) for the Custom Field.  Example: {   {      \"key\": \"2413\",     \"value\": \"Temporarily Closed\"   },   {     \"key\": \"2414\",     \"value\": \"Coming Soon\"   },   {     \"key\": \"2415\",     \"value\": \"Closed\"   },   {     \"key\": \"2416\",     \"value\": \"Open\"   } }
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        $this->container['options'] = $options;
 
         return $this;
     }

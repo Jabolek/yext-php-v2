@@ -96,9 +96,49 @@ class CustomFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "description"
+     */
+    public function testPropertyDescription()
+    {
+
+    }
+
+    /**
+     * Test attribute "alternate_language_behavior"
+     */
+    public function testPropertyAlternateLanguageBehavior()
+    {
+
+    }
+
+    /**
+     * Test attribute "group"
+     */
+    public function testPropertyGroup()
+    {
+
+    }
+
+    /**
+     * Test attribute "name"
+     */
+    public function testPropertyName()
+    {
+
+    }
+
+    /**
      * Test attribute "options"
      */
     public function testPropertyOptions()
+    {
+
+    }
+
+    /**
+     * Test attribute "validation"
+     */
+    public function testPropertyValidation()
     {
 
     }
@@ -115,14 +155,6 @@ class CustomFieldTest extends \PHPUnit_Framework_TestCase
      * Test attribute "id"
      */
     public function testPropertyId()
-    {
-
-    }
-
-    /**
-     * Test attribute "name"
-     */
-    public function testPropertyName()
     {
 
     }

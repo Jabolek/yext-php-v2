@@ -66,10 +66,14 @@ class CustomField implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
+        'description' => 'string',
+        'alternate_language_behavior' => 'string',
+        'group' => 'string',
+        'name' => 'string',
         'options' => '\Yext\Client\Model\CustomOption[]',
+        'validation' => '\Yext\Client\Model\CustomValidation',
         'type' => 'string',
-        'id' => 'string',
-        'name' => 'string'
+        'id' => 'string'
     ];
 
     public static function swaggerTypes()
@@ -82,10 +86,14 @@ class CustomField implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
+        'description' => 'description',
+        'alternate_language_behavior' => 'alternateLanguageBehavior',
+        'group' => 'group',
+        'name' => 'name',
         'options' => 'options',
+        'validation' => 'validation',
         'type' => 'type',
-        'id' => 'id',
-        'name' => 'name'
+        'id' => 'id'
     ];
 
 
@@ -94,10 +102,14 @@ class CustomField implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
+        'description' => 'setDescription',
+        'alternate_language_behavior' => 'setAlternateLanguageBehavior',
+        'group' => 'setGroup',
+        'name' => 'setName',
         'options' => 'setOptions',
+        'validation' => 'setValidation',
         'type' => 'setType',
-        'id' => 'setId',
-        'name' => 'setName'
+        'id' => 'setId'
     ];
 
 
@@ -106,10 +118,14 @@ class CustomField implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
+        'description' => 'getDescription',
+        'alternate_language_behavior' => 'getAlternateLanguageBehavior',
+        'group' => 'getGroup',
+        'name' => 'getName',
         'options' => 'getOptions',
+        'validation' => 'getValidation',
         'type' => 'getType',
-        'id' => 'getId',
-        'name' => 'getName'
+        'id' => 'getId'
     ];
 
     public static function attributeMap()
@@ -127,6 +143,17 @@ class CustomField implements ArrayAccess
         return self::$getters;
     }
 
+    const GROUP_NONE = 'NONE';
+    const GROUP_GROUP_1 = 'GROUP_1';
+    const GROUP_GROUP_2 = 'GROUP_2';
+    const GROUP_GROUP_3 = 'GROUP_3';
+    const GROUP_GROUP_4 = 'GROUP_4';
+    const GROUP_GROUP_5 = 'GROUP_5';
+    const GROUP_GROUP_6 = 'GROUP_6';
+    const GROUP_GROUP_7 = 'GROUP_7';
+    const GROUP_GROUP_8 = 'GROUP_8';
+    const GROUP_GROUP_9 = 'GROUP_9';
+    const GROUP_GROUP_10 = 'GROUP_10';
     const TYPE_BOOLEAN = 'BOOLEAN';
     const TYPE_DAILY_TIMES = 'DAILY_TIMES';
     const TYPE_DATE = 'DATE';
@@ -144,6 +171,27 @@ class CustomField implements ArrayAccess
     const TYPE_VIDEO_GALLERY = 'VIDEO_GALLERY';
     
 
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getGroupAllowableValues()
+    {
+        return [
+            self::GROUP_NONE,
+            self::GROUP_GROUP_1,
+            self::GROUP_GROUP_2,
+            self::GROUP_GROUP_3,
+            self::GROUP_GROUP_4,
+            self::GROUP_GROUP_5,
+            self::GROUP_GROUP_6,
+            self::GROUP_GROUP_7,
+            self::GROUP_GROUP_8,
+            self::GROUP_GROUP_9,
+            self::GROUP_GROUP_10,
+        ];
+    }
     
     /**
      * Gets allowable values of the enum
@@ -183,10 +231,14 @@ class CustomField implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->container['alternate_language_behavior'] = isset($data['alternate_language_behavior']) ? $data['alternate_language_behavior'] : null;
+        $this->container['group'] = isset($data['group']) ? $data['group'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['options'] = isset($data['options']) ? $data['options'] : null;
+        $this->container['validation'] = isset($data['validation']) ? $data['validation'] : null;
         $this->container['type'] = isset($data['type']) ? $data['type'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
     }
 
     /**
@@ -197,6 +249,11 @@ class CustomField implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+        $allowed_values = ["NONE", "GROUP_1", "GROUP_2", "GROUP_3", "GROUP_4", "GROUP_5", "GROUP_6", "GROUP_7", "GROUP_8", "GROUP_9", "GROUP_10"];
+        if (!is_null($this->container['group']) && !in_array($this->container['group'], $allowed_values)) {
+            $invalid_properties[] = "invalid value for 'group', must be one of #{allowed_values}.";
+        }
+
         $allowed_values = ["BOOLEAN", "DAILY_TIMES", "DATE", "GALLERY", "HOURS", "MULTILINE_TEXT", "MULTI_OPTION", "NUMBER", "PHOTO", "SINGLE_OPTION", "TEXT", "TEXT_LIST", "URL", "VIDEO", "VIDEO_GALLERY"];
         if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowed_values)) {
             $invalid_properties[] = "invalid value for 'type', must be one of #{allowed_values}.";
@@ -213,6 +270,10 @@ class CustomField implements ArrayAccess
      */
     public function valid()
     {
+        $allowed_values = ["NONE", "GROUP_1", "GROUP_2", "GROUP_3", "GROUP_4", "GROUP_5", "GROUP_6", "GROUP_7", "GROUP_8", "GROUP_9", "GROUP_10"];
+        if (!is_null($this->container['group']) && !in_array($this->container['group'], $allowed_values)) {
+            return false;
+        }
         $allowed_values = ["BOOLEAN", "DAILY_TIMES", "DATE", "GALLERY", "HOURS", "MULTILINE_TEXT", "MULTI_OPTION", "NUMBER", "PHOTO", "SINGLE_OPTION", "TEXT", "TEXT_LIST", "URL", "VIDEO", "VIDEO_GALLERY"];
         if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowed_values)) {
             return false;
@@ -220,6 +281,94 @@ class CustomField implements ArrayAccess
         return true;
     }
 
+
+    /**
+     * Gets description
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->container['description'];
+    }
+
+    /**
+     * Sets description
+     * @param string $description The Custom Field's description which, if provided, will be shown as a tooltip next to the Custom Field in the Knowledge Manager. Providing a description is highly recommended when creating Apps.
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->container['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Gets alternate_language_behavior
+     * @return string
+     */
+    public function getAlternateLanguageBehavior()
+    {
+        return $this->container['alternate_language_behavior'];
+    }
+
+    /**
+     * Sets alternate_language_behavior
+     * @param string $alternate_language_behavior Custom Field multi-language profile behavior, which is one of:  `PRIMARY_ONLY`: The Custom Field can only have a value set on its primary language profile.  `OVERRIDABLE`: The Custom Field can have a value set on any alternate language profiles, which will override the primary language profile value when the alternate language profile is requested. When requested, if a value is not set for an alternate language profile, the primary language profile value will be returned.  `LANGUAGE_SPECIFIC`: The Custom Field can have a value set on any alternate language profiles. When requested, if a value is not set for an alternate language profile, no value will be returned.
+     * @return $this
+     */
+    public function setAlternateLanguageBehavior($alternate_language_behavior)
+    {
+        $this->container['alternate_language_behavior'] = $alternate_language_behavior;
+
+        return $this;
+    }
+
+    /**
+     * Gets group
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->container['group'];
+    }
+
+    /**
+     * Sets group
+     * @param string $group The Custom Field's group.
+     * @return $this
+     */
+    public function setGroup($group)
+    {
+        $allowed_values = array('NONE', 'GROUP_1', 'GROUP_2', 'GROUP_3', 'GROUP_4', 'GROUP_5', 'GROUP_6', 'GROUP_7', 'GROUP_8', 'GROUP_9', 'GROUP_10');
+        if (!is_null($group) && (!in_array($group, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'group', must be one of 'NONE', 'GROUP_1', 'GROUP_2', 'GROUP_3', 'GROUP_4', 'GROUP_5', 'GROUP_6', 'GROUP_7', 'GROUP_8', 'GROUP_9', 'GROUP_10'");
+        }
+        $this->container['group'] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     * @param string $name The Custom Field's name.
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
+
+        return $this;
+    }
 
     /**
      * Gets options
@@ -238,6 +387,27 @@ class CustomField implements ArrayAccess
     public function setOptions($options)
     {
         $this->container['options'] = $options;
+
+        return $this;
+    }
+
+    /**
+     * Gets validation
+     * @return \Yext\Client\Model\CustomValidation
+     */
+    public function getValidation()
+    {
+        return $this->container['validation'];
+    }
+
+    /**
+     * Sets validation
+     * @param \Yext\Client\Model\CustomValidation $validation
+     * @return $this
+     */
+    public function setValidation($validation)
+    {
+        $this->container['validation'] = $validation;
 
         return $this;
     }
@@ -284,27 +454,6 @@ class CustomField implements ArrayAccess
     public function setId($id)
     {
         $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     * @param string $name The Custom Field's name.
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
 
         return $this;
     }

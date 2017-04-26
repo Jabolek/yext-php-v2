@@ -217,6 +217,121 @@ class KnowledgeManagerApi
     }
 
     /**
+     * Operation createCustomField
+     *
+     * Custom Fields: Create
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param \Yext\Client\Model\CustomField $body  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\IdResponse
+     */
+    public function createCustomField($v, $account_id, $body)
+    {
+        list($response) = $this->createCustomFieldWithHttpInfo($v, $account_id, $body);
+        return $response;
+    }
+
+    /**
+     * Operation createCustomFieldWithHttpInfo
+     *
+     * Custom Fields: Create
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param \Yext\Client\Model\CustomField $body  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\IdResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createCustomFieldWithHttpInfo($v, $account_id, $body)
+    {
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling createCustomField');
+        }
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling createCustomField');
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $body when calling createCustomField');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/customfields";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'POST',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\IdResponse',
+                '/accounts/{accountId}/customfields'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\IdResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
      * Operation createEvent
      *
      * Events: Create
@@ -775,6 +890,124 @@ class KnowledgeManagerApi
                 $headerParams,
                 '\Yext\Client\Model\ErrorResponse',
                 '/accounts/{accountId}/bios/{listId}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\ErrorResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteCustomField
+     *
+     * Custom Fields: Delete
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param string $custom_field_id  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\ErrorResponse
+     */
+    public function deleteCustomField($v, $account_id, $custom_field_id)
+    {
+        list($response) = $this->deleteCustomFieldWithHttpInfo($v, $account_id, $custom_field_id);
+        return $response;
+    }
+
+    /**
+     * Operation deleteCustomFieldWithHttpInfo
+     *
+     * Custom Fields: Delete
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param string $custom_field_id  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteCustomFieldWithHttpInfo($v, $account_id, $custom_field_id)
+    {
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling deleteCustomField');
+        }
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling deleteCustomField');
+        }
+        // verify the required parameter 'custom_field_id' is set
+        if ($custom_field_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $custom_field_id when calling deleteCustomField');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/customFields/{customFieldId}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($custom_field_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "customFieldId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($custom_field_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'DELETE',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\ErrorResponse',
+                '/accounts/{accountId}/customFields/{customFieldId}'
             );
 
             return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\ErrorResponse', $httpHeader), $statusCode, $httpHeader];
@@ -1406,7 +1639,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\BioListsResponse
      */
@@ -1424,7 +1657,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\BioListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -1621,13 +1854,131 @@ class KnowledgeManagerApi
     }
 
     /**
+     * Operation getCustomField
+     *
+     * Custom Fields: Get
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param string $custom_field_id  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\CustomFieldResponse
+     */
+    public function getCustomField($v, $account_id, $custom_field_id)
+    {
+        list($response) = $this->getCustomFieldWithHttpInfo($v, $account_id, $custom_field_id);
+        return $response;
+    }
+
+    /**
+     * Operation getCustomFieldWithHttpInfo
+     *
+     * Custom Fields: Get
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param string $custom_field_id  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\CustomFieldResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getCustomFieldWithHttpInfo($v, $account_id, $custom_field_id)
+    {
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling getCustomField');
+        }
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling getCustomField');
+        }
+        // verify the required parameter 'custom_field_id' is set
+        if ($custom_field_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $custom_field_id when calling getCustomField');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/customFields/{customFieldId}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($custom_field_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "customFieldId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($custom_field_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\CustomFieldResponse',
+                '/accounts/{accountId}/customFields/{customFieldId}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\CustomFieldResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\CustomFieldResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
      * Operation getCustomFields
      *
      * Custom Fields: List
      *
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param string $account_id  (required)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\CustomFieldsResponse
@@ -1645,7 +1996,7 @@ class KnowledgeManagerApi
      *
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param string $account_id  (required)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\CustomFieldsResponse, HTTP status code, HTTP response headers (array of strings)
@@ -1866,7 +2217,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\EventListsResponse
      */
@@ -1884,7 +2235,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\EventListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -2077,12 +2428,13 @@ class KnowledgeManagerApi
      * @param string $location_id  (required)
      * @param string $language_code Locale code. (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\LocationResponse
      */
-    public function getLanguageProfile($account_id, $location_id, $language_code, $v)
+    public function getLanguageProfile($account_id, $location_id, $language_code, $v, $resolve_placeholders = null)
     {
-        list($response) = $this->getLanguageProfileWithHttpInfo($account_id, $location_id, $language_code, $v);
+        list($response) = $this->getLanguageProfileWithHttpInfo($account_id, $location_id, $language_code, $v, $resolve_placeholders);
         return $response;
     }
 
@@ -2095,10 +2447,11 @@ class KnowledgeManagerApi
      * @param string $location_id  (required)
      * @param string $language_code Locale code. (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\LocationResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getLanguageProfileWithHttpInfo($account_id, $location_id, $language_code, $v)
+    public function getLanguageProfileWithHttpInfo($account_id, $location_id, $language_code, $v, $resolve_placeholders = null)
     {
         // verify the required parameter 'account_id' is set
         if ($account_id === null) {
@@ -2131,6 +2484,10 @@ class KnowledgeManagerApi
         // query params
         if ($v !== null) {
             $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // query params
+        if ($resolve_placeholders !== null) {
+            $queryParams['resolvePlaceholders'] = $this->apiClient->getSerializer()->toQueryValue($resolve_placeholders);
         }
         // path params
         if ($account_id !== null) {
@@ -2208,12 +2565,13 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $location_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\LanguageProfilesResponse
      */
-    public function getLanguageProfiles($account_id, $location_id, $v)
+    public function getLanguageProfiles($account_id, $location_id, $v, $resolve_placeholders = null)
     {
-        list($response) = $this->getLanguageProfilesWithHttpInfo($account_id, $location_id, $v);
+        list($response) = $this->getLanguageProfilesWithHttpInfo($account_id, $location_id, $v, $resolve_placeholders);
         return $response;
     }
 
@@ -2225,10 +2583,11 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $location_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\LanguageProfilesResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getLanguageProfilesWithHttpInfo($account_id, $location_id, $v)
+    public function getLanguageProfilesWithHttpInfo($account_id, $location_id, $v, $resolve_placeholders = null)
     {
         // verify the required parameter 'account_id' is set
         if ($account_id === null) {
@@ -2257,6 +2616,10 @@ class KnowledgeManagerApi
         // query params
         if ($v !== null) {
             $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // query params
+        if ($resolve_placeholders !== null) {
+            $queryParams['resolvePlaceholders'] = $this->apiClient->getSerializer()->toQueryValue($resolve_placeholders);
         }
         // path params
         if ($account_id !== null) {
@@ -2326,12 +2689,13 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $location_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\LocationResponse
      */
-    public function getLocation($account_id, $location_id, $v)
+    public function getLocation($account_id, $location_id, $v, $resolve_placeholders = null)
     {
-        list($response) = $this->getLocationWithHttpInfo($account_id, $location_id, $v);
+        list($response) = $this->getLocationWithHttpInfo($account_id, $location_id, $v, $resolve_placeholders);
         return $response;
     }
 
@@ -2343,10 +2707,11 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $location_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\LocationResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getLocationWithHttpInfo($account_id, $location_id, $v)
+    public function getLocationWithHttpInfo($account_id, $location_id, $v, $resolve_placeholders = null)
     {
         // verify the required parameter 'account_id' is set
         if ($account_id === null) {
@@ -2375,6 +2740,10 @@ class KnowledgeManagerApi
         // query params
         if ($v !== null) {
             $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // query params
+        if ($resolve_placeholders !== null) {
+            $queryParams['resolvePlaceholders'] = $this->apiClient->getSerializer()->toQueryValue($resolve_placeholders);
         }
         // path params
         if ($account_id !== null) {
@@ -2443,7 +2812,7 @@ class KnowledgeManagerApi
      *
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\FoldersResponse
@@ -2461,7 +2830,7 @@ class KnowledgeManagerApi
      *
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\FoldersResponse, HTTP status code, HTTP response headers (array of strings)
@@ -2564,13 +2933,14 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\LocationsResponse
      */
-    public function getLocations($account_id, $v, $limit = null, $offset = null)
+    public function getLocations($account_id, $v, $limit = null, $offset = null, $resolve_placeholders = null)
     {
-        list($response) = $this->getLocationsWithHttpInfo($account_id, $v, $limit, $offset);
+        list($response) = $this->getLocationsWithHttpInfo($account_id, $v, $limit, $offset, $resolve_placeholders);
         return $response;
     }
 
@@ -2582,11 +2952,12 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\LocationsResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getLocationsWithHttpInfo($account_id, $v, $limit = null, $offset = null)
+    public function getLocationsWithHttpInfo($account_id, $v, $limit = null, $offset = null, $resolve_placeholders = null)
     {
         // verify the required parameter 'account_id' is set
         if ($account_id === null) {
@@ -2623,6 +2994,10 @@ class KnowledgeManagerApi
         // query params
         if ($offset !== null) {
             $queryParams['offset'] = $this->apiClient->getSerializer()->toQueryValue($offset);
+        }
+        // query params
+        if ($resolve_placeholders !== null) {
+            $queryParams['resolvePlaceholders'] = $this->apiClient->getSerializer()->toQueryValue($resolve_placeholders);
         }
         // path params
         if ($account_id !== null) {
@@ -2802,7 +3177,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\MenuListsResponse
      */
@@ -2820,7 +3195,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\MenuListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -3040,7 +3415,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\ProductListsResponse
      */
@@ -3058,7 +3433,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $offset Number of results to return. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\ProductListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -3140,6 +3515,136 @@ class KnowledgeManagerApi
             switch ($e->getCode()) {
                 case 200:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ProductListsResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation searchLocations
+     *
+     * Locations: Search
+     *
+     * @param string $account_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param int $limit Number of results to return. (optional, default to 10)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param string $filters A set of filters that is applied to the set of locations that would otherwise be returned. Should be provided as a URL-encoded string containing a JSON object. The JSON object will be an array with one or more filter objects defined. All filter objects will apply as an intersection (i.e. AND). Field names reference Location fields, as well as custom fields using the format custom###, where ### is the custom field’s ID.  The filter types are the following. Note there may be multiple available specifications for a given filter type:  &lt;table style&#x3D;\&quot;width:100%\&quot;&gt;   &lt;tr&gt;     &lt;th&gt;Filter Type&lt;/th&gt;     &lt;th&gt;Syntax&lt;/th&gt;     &lt;th&gt;Description&lt;/th&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Full&lt;/td&gt;     &lt;td&gt;fieldName: {contains: $search}&lt;/td&gt;     &lt;td&gt;$search is the search string&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$search,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [contains,doesNotContain,startsWith,equalTo], $search is an array of search strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [empty,notEmpty]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Number&lt;/td&gt;     &lt;td&gt;fieldName: {$type: $value}&lt;/td&gt;     &lt;td&gt;$type is one of [eq,lt,gt,le,ge], $value is the numeric value&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Number&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$value1, $value2]}&lt;/td&gt;     &lt;td&gt;$type is one of [between], $value1 and $value2 are numeric values&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Date&lt;/td&gt;     &lt;td&gt;fieldName: {$type: $value}&lt;/td&gt;     &lt;td&gt;$type is one of [eq,lt,gt,le,ge], $value is a string of \&quot;YYYY-MM-DD” formatted date&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Date&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [empty,notEmpty]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Date&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$value1, $value2]}&lt;/td&gt;     &lt;td&gt;$type is one of [between], $value1 and $value2 are strings of \&quot;YYYY-MM-DD” formatted date&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Categories&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $id is an array of numeric category IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Categories&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [none]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Assets&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $id is an array of numeric category IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Assets&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [none]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Country&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$country,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $country is an array of country code strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;PrimaryLanguage&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$language,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $language is an array of language code strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;AlternateLanguage&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$language,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $language is an array of language code strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;StringSingle&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$string,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $string is an array of strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;StringList&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$string,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $string is an array of strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;LocationType&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $id is an array of location type IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Bool&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [true,false]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Option&lt;/td&gt;     &lt;td&gt;fieldName: {$type: $id}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $id is an option ID (For single option custom fields)&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Option&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $string is an array of strings, combined with OR (For multi option custom fields)&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $id is an array of IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt; &lt;/table&gt;  The following fields can be specified in the request (Field name/Filter Type/Example(s)):  &lt;table style&#x3D;\&quot;width:100%\&quot;&gt;   &lt;tr&gt;     &lt;th&gt;Field Name&lt;/th&gt;     &lt;th&gt;Filter Type&lt;/th&gt;     &lt;th&gt;Example(s)&lt;/th&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;location&lt;/td&gt;     &lt;td&gt;Full&lt;/td&gt;     &lt;td&gt;\&quot;location”: {\&quot;contains”: \&quot;Atlanta”}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;name&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;name”: {\&quot;startsWith”: [\&quot;Guitar”]}, \&quot;name”: {\&quot;contains”: [\&quot;A”,”B”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;address&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;address”: {\&quot;startsWith”: [\&quot;South”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;address2&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;address2”: {\&quot;contains”: [\&quot;Suite”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;city&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;city”: {\&quot;contains”: [\&quot;Atlanta”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;state&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;state”: {\&quot;contains”: [\&quot;AK”,”VA”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;zip&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;zip”: {\&quot;contains”: [\&quot;M5K 7QB”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;phones&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;phones”: {\&quot;startsWith”: [\&quot;703”,”571”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;specialOffer&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;specialOffer”: \&quot;notEmpty”&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;emails&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;emails”: {\&quot;doesNotContain”: [\&quot;@yext.com”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;website&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;website”: {\&quot;equalTo”: [\&quot;https://www.yext.com/”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;categories&lt;/td&gt;     &lt;td&gt;Categories&lt;/td&gt;     &lt;td&gt;\&quot;categories”: {\&quot;includes”: [23,755,34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;closed&lt;/td&gt;     &lt;td&gt;Bool&lt;/td&gt;     &lt;td&gt;\&quot;closed”: true&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;storeId&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;storeId”: {\&quot;equalTo”: [\&quot;MCD0001”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;countryCode&lt;/td&gt;     &lt;td&gt;Country&lt;/td&gt;     &lt;td&gt;\&quot;countryCode”: {\&quot;notIncludes”: [\&quot;US”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;products&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;products”: {\&quot;startsWith”: [\&quot;Burger”,”Fries”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;services&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;services”: {\&quot;contains”: [\&quot;Manicures”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;specialties&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;services”: \&quot;notEmpty”&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;associations&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;associations”: \&quot;empty”&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;brands&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;brands”: {\&quot;equalTo”: [\&quot;North Face”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;languages&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;languages”: {\&quot;equalTo”: [\&quot;English”,”Spanish”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;keywords&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;keywords”: {\&quot;startsWith”: [\&quot;Franchise”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;menuIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;menuIds”: {\&quot;includes”: [23,755,34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;productListIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;productListIds”: {\&quot;notIncludes”: [2]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;calendarIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;calendarIds”: {\&quot;notIncludes”: [34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;bioIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;bioIds”: {\&quot;includes”: [23,34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;custom###&lt;/td&gt;     &lt;td&gt;Text, Number, Date, Bool, or Option&lt;/td&gt;     &lt;td&gt;\&quot;custom123”: {\&quot;equalTo”: [\&quot;asdf”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;folder&lt;/td&gt;     &lt;td&gt;int64&lt;/td&gt;     &lt;td&gt;\&quot;folder”: 123&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;primary_language&lt;/td&gt;     &lt;td&gt;PrimaryLanguage&lt;/td&gt;     &lt;td&gt;\&quot;primary_language”: {\&quot;is”: \&quot;fr_CA”}&lt;/td&gt;   &lt;/tr&gt; &lt;/table&gt; (optional)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\LocationsResponse
+     */
+    public function searchLocations($account_id, $v, $limit = null, $offset = null, $filters = null)
+    {
+        list($response) = $this->searchLocationsWithHttpInfo($account_id, $v, $limit, $offset, $filters);
+        return $response;
+    }
+
+    /**
+     * Operation searchLocationsWithHttpInfo
+     *
+     * Locations: Search
+     *
+     * @param string $account_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param int $limit Number of results to return. (optional, default to 10)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param string $filters A set of filters that is applied to the set of locations that would otherwise be returned. Should be provided as a URL-encoded string containing a JSON object. The JSON object will be an array with one or more filter objects defined. All filter objects will apply as an intersection (i.e. AND). Field names reference Location fields, as well as custom fields using the format custom###, where ### is the custom field’s ID.  The filter types are the following. Note there may be multiple available specifications for a given filter type:  &lt;table style&#x3D;\&quot;width:100%\&quot;&gt;   &lt;tr&gt;     &lt;th&gt;Filter Type&lt;/th&gt;     &lt;th&gt;Syntax&lt;/th&gt;     &lt;th&gt;Description&lt;/th&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Full&lt;/td&gt;     &lt;td&gt;fieldName: {contains: $search}&lt;/td&gt;     &lt;td&gt;$search is the search string&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$search,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [contains,doesNotContain,startsWith,equalTo], $search is an array of search strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [empty,notEmpty]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Number&lt;/td&gt;     &lt;td&gt;fieldName: {$type: $value}&lt;/td&gt;     &lt;td&gt;$type is one of [eq,lt,gt,le,ge], $value is the numeric value&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Number&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$value1, $value2]}&lt;/td&gt;     &lt;td&gt;$type is one of [between], $value1 and $value2 are numeric values&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Date&lt;/td&gt;     &lt;td&gt;fieldName: {$type: $value}&lt;/td&gt;     &lt;td&gt;$type is one of [eq,lt,gt,le,ge], $value is a string of \&quot;YYYY-MM-DD” formatted date&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Date&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [empty,notEmpty]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Date&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$value1, $value2]}&lt;/td&gt;     &lt;td&gt;$type is one of [between], $value1 and $value2 are strings of \&quot;YYYY-MM-DD” formatted date&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Categories&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $id is an array of numeric category IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Categories&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [none]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Assets&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $id is an array of numeric category IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Assets&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [none]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Country&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$country,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $country is an array of country code strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;PrimaryLanguage&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$language,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $language is an array of language code strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;AlternateLanguage&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$language,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $language is an array of language code strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;StringSingle&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$string,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $string is an array of strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;StringList&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$string,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $string is an array of strings, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;LocationType&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $id is an array of location type IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Bool&lt;/td&gt;     &lt;td&gt;fieldName: $type&lt;/td&gt;     &lt;td&gt;$type is one of [true,false]&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Option&lt;/td&gt;     &lt;td&gt;fieldName: {$type: $id}&lt;/td&gt;     &lt;td&gt;$type is one of [is,isNot], $id is an option ID (For single option custom fields)&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;Option&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $string is an array of strings, combined with OR (For multi option custom fields)&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;fieldName: {$type: [$id,...]}&lt;/td&gt;     &lt;td&gt;$type is one of [includes,notIncludes], $id is an array of IDs, combined with OR&lt;/td&gt;   &lt;/tr&gt; &lt;/table&gt;  The following fields can be specified in the request (Field name/Filter Type/Example(s)):  &lt;table style&#x3D;\&quot;width:100%\&quot;&gt;   &lt;tr&gt;     &lt;th&gt;Field Name&lt;/th&gt;     &lt;th&gt;Filter Type&lt;/th&gt;     &lt;th&gt;Example(s)&lt;/th&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;location&lt;/td&gt;     &lt;td&gt;Full&lt;/td&gt;     &lt;td&gt;\&quot;location”: {\&quot;contains”: \&quot;Atlanta”}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;name&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;name”: {\&quot;startsWith”: [\&quot;Guitar”]}, \&quot;name”: {\&quot;contains”: [\&quot;A”,”B”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;address&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;address”: {\&quot;startsWith”: [\&quot;South”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;address2&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;address2”: {\&quot;contains”: [\&quot;Suite”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;city&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;city”: {\&quot;contains”: [\&quot;Atlanta”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;state&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;state”: {\&quot;contains”: [\&quot;AK”,”VA”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;zip&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;zip”: {\&quot;contains”: [\&quot;M5K 7QB”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;phones&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;phones”: {\&quot;startsWith”: [\&quot;703”,”571”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;specialOffer&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;specialOffer”: \&quot;notEmpty”&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;emails&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;emails”: {\&quot;doesNotContain”: [\&quot;@yext.com”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;website&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;website”: {\&quot;equalTo”: [\&quot;https://www.yext.com/”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;categories&lt;/td&gt;     &lt;td&gt;Categories&lt;/td&gt;     &lt;td&gt;\&quot;categories”: {\&quot;includes”: [23,755,34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;closed&lt;/td&gt;     &lt;td&gt;Bool&lt;/td&gt;     &lt;td&gt;\&quot;closed”: true&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;storeId&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;storeId”: {\&quot;equalTo”: [\&quot;MCD0001”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;countryCode&lt;/td&gt;     &lt;td&gt;Country&lt;/td&gt;     &lt;td&gt;\&quot;countryCode”: {\&quot;notIncludes”: [\&quot;US”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;products&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;products”: {\&quot;startsWith”: [\&quot;Burger”,”Fries”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;services&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;services”: {\&quot;contains”: [\&quot;Manicures”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;specialties&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;services”: \&quot;notEmpty”&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;associations&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;associations”: \&quot;empty”&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;brands&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;brands”: {\&quot;equalTo”: [\&quot;North Face”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;languages&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;languages”: {\&quot;equalTo”: [\&quot;English”,”Spanish”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;keywords&lt;/td&gt;     &lt;td&gt;Text&lt;/td&gt;     &lt;td&gt;\&quot;keywords”: {\&quot;startsWith”: [\&quot;Franchise”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;menuIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;menuIds”: {\&quot;includes”: [23,755,34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;productListIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;productListIds”: {\&quot;notIncludes”: [2]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;calendarIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;calendarIds”: {\&quot;notIncludes”: [34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;bioIds&lt;/td&gt;     &lt;td&gt;IdList&lt;/td&gt;     &lt;td&gt;\&quot;bioIds”: {\&quot;includes”: [23,34]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;custom###&lt;/td&gt;     &lt;td&gt;Text, Number, Date, Bool, or Option&lt;/td&gt;     &lt;td&gt;\&quot;custom123”: {\&quot;equalTo”: [\&quot;asdf”]}&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;folder&lt;/td&gt;     &lt;td&gt;int64&lt;/td&gt;     &lt;td&gt;\&quot;folder”: 123&lt;/td&gt;   &lt;/tr&gt;   &lt;tr&gt;     &lt;td&gt;primary_language&lt;/td&gt;     &lt;td&gt;PrimaryLanguage&lt;/td&gt;     &lt;td&gt;\&quot;primary_language”: {\&quot;is”: \&quot;fr_CA”}&lt;/td&gt;   &lt;/tr&gt; &lt;/table&gt; (optional)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\LocationsResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function searchLocationsWithHttpInfo($account_id, $v, $limit = null, $offset = null, $filters = null)
+    {
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling searchLocations');
+        }
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling searchLocations');
+        }
+        if (!is_null($limit) && ($limit > 50.0)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.searchLocations, must be smaller than or equal to 50.0.');
+        }
+
+        if (!is_null($offset) && ($offset > 9950.0)) {
+            throw new \InvalidArgumentException('invalid value for "$offset" when calling KnowledgeManagerApi.searchLocations, must be smaller than or equal to 9950.0.');
+        }
+
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/locationsearch";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }
+        // query params
+        if ($offset !== null) {
+            $queryParams['offset'] = $this->apiClient->getSerializer()->toQueryValue($offset);
+        }
+        // query params
+        if ($filters !== null) {
+            $queryParams['filters'] = $this->apiClient->getSerializer()->toQueryValue($filters);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\LocationsResponse',
+                '/accounts/{accountId}/locationsearch'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\LocationsResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\LocationsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 default:
@@ -3269,6 +3774,135 @@ class KnowledgeManagerApi
             switch ($e->getCode()) {
                 case 200:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\BioListResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateCustomField
+     *
+     * Custom Fields: Update
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param string $custom_field_id  (required)
+     * @param \Yext\Client\Model\CustomFieldUpdate $body  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\IdResponse
+     */
+    public function updateCustomField($v, $account_id, $custom_field_id, $body)
+    {
+        list($response) = $this->updateCustomFieldWithHttpInfo($v, $account_id, $custom_field_id, $body);
+        return $response;
+    }
+
+    /**
+     * Operation updateCustomFieldWithHttpInfo
+     *
+     * Custom Fields: Update
+     *
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param string $account_id  (required)
+     * @param string $custom_field_id  (required)
+     * @param \Yext\Client\Model\CustomFieldUpdate $body  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\IdResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateCustomFieldWithHttpInfo($v, $account_id, $custom_field_id, $body)
+    {
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling updateCustomField');
+        }
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling updateCustomField');
+        }
+        // verify the required parameter 'custom_field_id' is set
+        if ($custom_field_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $custom_field_id when calling updateCustomField');
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $body when calling updateCustomField');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/customFields/{customFieldId}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($custom_field_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "customFieldId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($custom_field_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'PUT',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\IdResponse',
+                '/accounts/{accountId}/customFields/{customFieldId}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\IdResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 default:

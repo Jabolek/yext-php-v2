@@ -84,8 +84,8 @@ Yext\Client\Configuration::getDefaultConfiguration()->setApiKey('api_key', 'YOUR
 $api_instance = new Yext\Client\Api\AnalyticsApi();
 $account_id = "account_id_example"; // string | 
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
-$async = true; // bool | Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large
-$callback = "callback_example"; // string | Optional.  When async=true and callback is specified, the provided URL will be called when the report is ready.  The URL must of of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status=DONE, contains the URL to download the report data as a text file.
+$async = true; // bool | Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large.
+$callback = "callback_example"; // string | Optional.  When async=true and callback is specified, the provided URL will be called when the report is ready.  The URL must be of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status=DONE, contains the URL to download the report data as a text file.
 $body = new \Yext\Client\Model\CreateReportRequestBody(); // \Yext\Client\Model\CreateReportRequestBody | JSON object containing any filters to be applied to the report
 
 try {
@@ -103,8 +103,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **string**|  |
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
- **async** | **bool**| Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large | [optional]
- **callback** | **string**| Optional.  When async&#x3D;true and callback is specified, the provided URL will be called when the report is ready.  The URL must of of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status&#x3D;DONE, contains the URL to download the report data as a text file. | [optional]
+ **async** | **bool**| Defaults to false.  When true, the report’s ID will be returned immediately and the report results can be fetched later.  When false, the report results will be returned immediately, but an error may occur if the data requested is too large. | [optional]
+ **callback** | **string**| Optional.  When async&#x3D;true and callback is specified, the provided URL will be called when the report is ready.  The URL must be of the form:       POST https://[your domain]/[your path]  It must accept the following parameters:      id:     (int)     - The ID of the report that is ready      status: (string)  - one of [DONE, FAILED]      url:    (string)  - When status&#x3D;DONE, contains the URL to download the report data as a text file. | [optional]
  **body** | [**\Yext\Client\Model\CreateReportRequestBody**](../Model/\Yext\Client\Model\CreateReportRequestBody.md)| JSON object containing any filters to be applied to the report | [optional]
 
 ### Return type

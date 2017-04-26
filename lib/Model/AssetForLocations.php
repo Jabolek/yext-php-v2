@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhoto
+ * AssetForLocations
  *
  * PHP version 5
  *
@@ -44,7 +44,7 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * LocationPhoto Class Doc Comment
+ * AssetForLocations Class Doc Comment
  *
  * @category    Class */
 /**
@@ -53,25 +53,24 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhoto implements ArrayAccess
+class AssetForLocations implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'LocationPhoto';
+    protected static $swaggerModelName = 'AssetForLocations';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'derivatives' => '\Yext\Client\Model\LocationPhotoDerivatives[]',
-        'description' => 'string',
-        'url' => 'string',
-        'height' => 'int',
-        'width' => 'int',
-        'alternate_text' => 'string'
+        'label_ids' => 'string[]',
+        'mapping_type' => 'string',
+        'location_ids' => 'string[]',
+        'folder_id' => 'string',
+        'label_operator' => 'string'
     ];
 
     public static function swaggerTypes()
@@ -84,12 +83,11 @@ class LocationPhoto implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'derivatives' => 'derivatives',
-        'description' => 'description',
-        'url' => 'url',
-        'height' => 'height',
-        'width' => 'width',
-        'alternate_text' => 'alternateText'
+        'label_ids' => 'labelIds',
+        'mapping_type' => 'mappingType',
+        'location_ids' => 'locationIds',
+        'folder_id' => 'folderId',
+        'label_operator' => 'labelOperator'
     ];
 
 
@@ -98,12 +96,11 @@ class LocationPhoto implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'derivatives' => 'setDerivatives',
-        'description' => 'setDescription',
-        'url' => 'setUrl',
-        'height' => 'setHeight',
-        'width' => 'setWidth',
-        'alternate_text' => 'setAlternateText'
+        'label_ids' => 'setLabelIds',
+        'mapping_type' => 'setMappingType',
+        'location_ids' => 'setLocationIds',
+        'folder_id' => 'setFolderId',
+        'label_operator' => 'setLabelOperator'
     ];
 
 
@@ -112,12 +109,11 @@ class LocationPhoto implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'derivatives' => 'getDerivatives',
-        'description' => 'getDescription',
-        'url' => 'getUrl',
-        'height' => 'getHeight',
-        'width' => 'getWidth',
-        'alternate_text' => 'getAlternateText'
+        'label_ids' => 'getLabelIds',
+        'mapping_type' => 'getMappingType',
+        'location_ids' => 'getLocationIds',
+        'folder_id' => 'getFolderId',
+        'label_operator' => 'getLabelOperator'
     ];
 
     public static function attributeMap()
@@ -135,8 +131,22 @@ class LocationPhoto implements ArrayAccess
         return self::$getters;
     }
 
+    const LABEL_OPERATOR_AND = 'AND';
+    const LABEL_OPERATOR_OR = 'OR';
     
 
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getLabelOperatorAllowableValues()
+    {
+        return [
+            self::LABEL_OPERATOR_AND,
+            self::LABEL_OPERATOR_OR,
+        ];
+    }
     
 
     /**
@@ -151,12 +161,11 @@ class LocationPhoto implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['derivatives'] = isset($data['derivatives']) ? $data['derivatives'] : null;
-        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
-        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
-        $this->container['height'] = isset($data['height']) ? $data['height'] : null;
-        $this->container['width'] = isset($data['width']) ? $data['width'] : null;
-        $this->container['alternate_text'] = isset($data['alternate_text']) ? $data['alternate_text'] : null;
+        $this->container['label_ids'] = isset($data['label_ids']) ? $data['label_ids'] : null;
+        $this->container['mapping_type'] = isset($data['mapping_type']) ? $data['mapping_type'] : null;
+        $this->container['location_ids'] = isset($data['location_ids']) ? $data['location_ids'] : null;
+        $this->container['folder_id'] = isset($data['folder_id']) ? $data['folder_id'] : null;
+        $this->container['label_operator'] = isset($data['label_operator']) ? $data['label_operator'] : null;
     }
 
     /**
@@ -167,6 +176,14 @@ class LocationPhoto implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+        if ($this->container['mapping_type'] === null) {
+            $invalid_properties[] = "'mapping_type' can't be null";
+        }
+        $allowed_values = ["AND", "OR"];
+        if (!is_null($this->container['label_operator']) && !in_array($this->container['label_operator'], $allowed_values)) {
+            $invalid_properties[] = "invalid value for 'label_operator', must be one of #{allowed_values}.";
+        }
+
         return $invalid_properties;
     }
 
@@ -178,132 +195,122 @@ class LocationPhoto implements ArrayAccess
      */
     public function valid()
     {
+        if ($this->container['mapping_type'] === null) {
+            return false;
+        }
+        $allowed_values = ["AND", "OR"];
+        if (!is_null($this->container['label_operator']) && !in_array($this->container['label_operator'], $allowed_values)) {
+            return false;
+        }
         return true;
     }
 
 
     /**
-     * Gets derivatives
-     * @return \Yext\Client\Model\LocationPhotoDerivatives[]
+     * Gets label_ids
+     * @return string[]
      */
-    public function getDerivatives()
+    public function getLabelIds()
     {
-        return $this->container['derivatives'];
+        return $this->container['label_ids'];
     }
 
     /**
-     * Sets derivatives
-     * @param \Yext\Client\Model\LocationPhotoDerivatives[] $derivatives
+     * Sets label_ids
+     * @param string[] $label_ids The list of **external** label IDs.  **Optional - can only be set if mappingType = ``FOLDER`` or ``ALL_LOCATIONS``.**
      * @return $this
      */
-    public function setDerivatives($derivatives)
+    public function setLabelIds($label_ids)
     {
-        $this->container['derivatives'] = $derivatives;
+        $this->container['label_ids'] = $label_ids;
 
         return $this;
     }
 
     /**
-     * Gets description
+     * Gets mapping_type
      * @return string
      */
-    public function getDescription()
+    public function getMappingType()
     {
-        return $this->container['description'];
+        return $this->container['mapping_type'];
     }
 
     /**
-     * Sets description
-     * @param string $description Image description.
+     * Sets mapping_type
+     * @param string $mapping_type The type of asset to location mapping:  * ``NO_LOCATIONS``: Not available to any location. * ``ALL_LOCATIONS``: Available to all locations. * ``FOLDER``: Available to all locations in a specified folder. * ``LOCATIONS``: Available to a list of locations.
      * @return $this
      */
-    public function setDescription($description)
+    public function setMappingType($mapping_type)
     {
-        $this->container['description'] = $description;
+        $this->container['mapping_type'] = $mapping_type;
 
         return $this;
     }
 
     /**
-     * Gets url
+     * Gets location_ids
+     * @return string[]
+     */
+    public function getLocationIds()
+    {
+        return $this->container['location_ids'];
+    }
+
+    /**
+     * Sets location_ids
+     * @param string[] $location_ids The list of **external** location IDs which this asset can be used for.  **Optional - can only be set if mappingType = ``LOCATIONS``.**
+     * @return $this
+     */
+    public function setLocationIds($location_ids)
+    {
+        $this->container['location_ids'] = $location_ids;
+
+        return $this;
+    }
+
+    /**
+     * Gets folder_id
      * @return string
      */
-    public function getUrl()
+    public function getFolderId()
     {
-        return $this->container['url'];
+        return $this->container['folder_id'];
     }
 
     /**
-     * Sets url
-     * @param string $url Valid URL to image. Accepted formats: .jpg, .png.  If the image could not be downloaded, or if its URL is invalid, the image will be ignored. The success response will contain a warning message explaining why the image was not stored in the system.
+     * Sets folder_id
+     * @param string $folder_id The **external** folder ID for locations which this asset can be used for.  **Optional - can only be set if mappingType = ``FOLDER``.**
      * @return $this
      */
-    public function setUrl($url)
+    public function setFolderId($folder_id)
     {
-        $this->container['url'] = $url;
+        $this->container['folder_id'] = $folder_id;
 
         return $this;
     }
 
     /**
-     * Gets height
-     * @return int
-     */
-    public function getHeight()
-    {
-        return $this->container['height'];
-    }
-
-    /**
-     * Sets height
-     * @param int $height Original photo height.
-     * @return $this
-     */
-    public function setHeight($height)
-    {
-        $this->container['height'] = $height;
-
-        return $this;
-    }
-
-    /**
-     * Gets width
-     * @return int
-     */
-    public function getWidth()
-    {
-        return $this->container['width'];
-    }
-
-    /**
-     * Sets width
-     * @param int $width Original photo width.
-     * @return $this
-     */
-    public function setWidth($width)
-    {
-        $this->container['width'] = $width;
-
-        return $this;
-    }
-
-    /**
-     * Gets alternate_text
+     * Gets label_operator
      * @return string
      */
-    public function getAlternateText()
+    public function getLabelOperator()
     {
-        return $this->container['alternate_text'];
+        return $this->container['label_operator'];
     }
 
     /**
-     * Sets alternate_text
-     * @param string $alternate_text The alternate text to be used for accessibility purposes.
+     * Sets label_operator
+     * @param string $label_operator The operator on the list of label IDs - whether the list is any of (``OR``) or all of (``AND``).  **Optional - can only be set if mappingType = ``FOLDER`` or ``ALL_LOCATIONS``.**
      * @return $this
      */
-    public function setAlternateText($alternate_text)
+    public function setLabelOperator($label_operator)
     {
-        $this->container['alternate_text'] = $alternate_text;
+        $allowed_values = array('AND', 'OR');
+        if (!is_null($label_operator) && (!in_array($label_operator, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for 'label_operator', must be one of 'AND', 'OR'");
+        }
+        $this->container['label_operator'] = $label_operator;
 
         return $this;
     }

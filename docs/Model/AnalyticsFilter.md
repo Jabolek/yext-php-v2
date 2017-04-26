@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **instagram_content_type** | **string** |  | [optional] 
 **google_action_type** | **string[]** | Specifies the type of customer actions to be included in the report. Can only be used with the &#x60;GOOGLE_CUSTOMER_ACTIONS&#x60; metric. | [optional] 
 **google_query_type** | **string[]** | Specifies the type of queries to be included in the report. Can only be used with the &#x60;GOOGLE_SEARCHES&#x60; metric. | [optional] 
-**platforms** | **string[]** | Array of platform IDs. | [optional] 
+**listings_live_type** | **string** | Specifies the type of listings live that should be included in the report. Can only be used with &#x60;LISTINGS_LIVE&#x60; metric. | [optional] 
 **search_term** | **string** |  | [optional] 
 **partners** | **float[]** | Specifies the partners that should be included in the report. Can only be used with Reviews metrics. | [optional] 
 **search_type** | **string** |  | [optional] 
@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **frequent_words** | **string[]** | Specifies the words that should be included in the report. Can only be used with Reviews metrics. | [optional] 
 **foursquare_checkin_time_of_day** | **string** |  | [optional] 
 **ratings** | **int[]** | Specifies the ratings to be included in the report. Can only be used with Reviews metrics. | [optional] 
+**page_types** | **string[]** | Specifies the Pages page types that should be included in the report. Can only be used with Store Pages metrics | [optional] 
 **foursquare_checkin_gender** | **string** |  | [optional] 
 **foursquare_checkin_type** | **string** |  | [optional] 
 **hours** | **float[]** | Specifies the hour(s) of day that should be included in the report. Can only, and must be used with the &#x60;GOOGLE_PHONE_CALLS&#x60; metric. | [optional] 
@@ -25,6 +26,8 @@ Name | Type | Description | Notes
 **location_ids** | **string[]** | Array of locationIds | [optional] 
 **countries** | **string[]** | Array of 3166 Alpha-2 country codes. | [optional] 
 **min_search_frequency** | **double** |  | [optional] 
+**publisher_suggestion_type** | **string[]** | Specifies the types of publisher suggestions that should be included in the report. Can only be used with &#x60;PUBLISHER_SUGGESTIONS&#x60; metric. | [optional] 
+**platforms** | **string[]** | Array of platform IDs. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

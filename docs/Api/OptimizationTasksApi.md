@@ -30,7 +30,7 @@ $account_id = "account_id_example"; // string |
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
 $task_ids = "task_ids_example"; // string | Comma-separated list of Optimization Task IDs corresponding to Optimization Tasks that should be included in the response.  If no IDs are provided, defaults to all available Optimization Tasks in the account.
 $location_id = "location_id_example"; // string | Location ID to be used as a filter.  If no ID is provided, defaults to all Locations in the account.
-$mode = "PENDING_ONLY"; // string | When mode is PENDING_ONLY, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is ALL_TASKS, the resulting link will ask the user to complete all specified tasks for all specified locations, regardless of whether they have been completed before, are pending, or are in progress.
+$mode = "PENDING_ONLY"; // string | When mode is `PENDING_ONLY`, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is `ALL_TASKS`, the resulting link will show the user all specified tasks for all specified locations, regardless of their status. If a task has been completed, the user is given the option to update the content they entered when completing the task.
 
 try {
     $result = $api_instance->getLinkOptimizationTask($account_id, $v, $task_ids, $location_id, $mode);
@@ -49,7 +49,7 @@ Name | Type | Description  | Notes
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
  **task_ids** | **string**| Comma-separated list of Optimization Task IDs corresponding to Optimization Tasks that should be included in the response.  If no IDs are provided, defaults to all available Optimization Tasks in the account. | [optional]
  **location_id** | **string**| Location ID to be used as a filter.  If no ID is provided, defaults to all Locations in the account. | [optional]
- **mode** | **string**| When mode is PENDING_ONLY, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is ALL_TASKS, the resulting link will ask the user to complete all specified tasks for all specified locations, regardless of whether they have been completed before, are pending, or are in progress. | [optional] [default to PENDING_ONLY]
+ **mode** | **string**| When mode is &#x60;PENDING_ONLY&#x60;, the resulting link will only ask the user to complete tasks that are pending or in progress (that have not been completed before).  When mode is &#x60;ALL_TASKS&#x60;, the resulting link will show the user all specified tasks for all specified locations, regardless of their status. If a task has been completed, the user is given the option to update the content they entered when completing the task. | [optional] [default to PENDING_ONLY]
 
 ### Return type
 

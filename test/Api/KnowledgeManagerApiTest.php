@@ -101,6 +101,17 @@ class KnowledgeManagerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for createCustomField
+     *
+     * Custom Fields: Create.
+     *
+     */
+    public function testCreateCustomField()
+    {
+
+    }
+
+    /**
      * Test case for createEvent
      *
      * Events: Create.
@@ -151,6 +162,17 @@ class KnowledgeManagerApiTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testDeleteBioList()
+    {
+
+    }
+
+    /**
+     * Test case for deleteCustomField
+     *
+     * Custom Fields: Delete.
+     *
+     */
+    public function testDeleteCustomField()
     {
 
     }
@@ -228,6 +250,17 @@ class KnowledgeManagerApiTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testGetBusinessCategories()
+    {
+
+    }
+
+    /**
+     * Test case for getCustomField
+     *
+     * Custom Fields: Get.
+     *
+     */
+    public function testGetCustomField()
     {
 
     }
@@ -376,12 +409,34 @@ class KnowledgeManagerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for searchLocations
+     *
+     * Locations: Search.
+     *
+     */
+    public function testSearchLocations()
+    {
+
+    }
+
+    /**
      * Test case for updateBio
      *
      * Bios: Update.
      *
      */
     public function testUpdateBio()
+    {
+
+    }
+
+    /**
+     * Test case for updateCustomField
+     *
+     * Custom Fields: Update.
+     *
+     */
+    public function testUpdateCustomField()
     {
 
     }

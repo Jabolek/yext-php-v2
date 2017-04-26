@@ -104,9 +104,9 @@ class CreateReportRequestBodyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "dimensions"
+     * Test attribute "dimension"
      */
-    public function testPropertyDimensions()
+    public function testPropertyDimension()
     {
 
     }

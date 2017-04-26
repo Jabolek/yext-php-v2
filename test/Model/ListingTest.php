@@ -136,6 +136,14 @@ class ListingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "alternate_brands"
+     */
+    public function testPropertyAlternateBrands()
+    {
+
+    }
+
+    /**
      * Test attribute "login_url"
      */
     public function testPropertyLoginUrl()

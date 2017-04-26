@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **additional_status** | **string** |  | [optional] 
 **listing_url** | **string** | Listing URL | [optional] 
 **location_id** | **string** | ID of the location associated with this listing | [optional] 
+**alternate_brands** | [**\Yext\Client\Model\ListingAlternateBrands[]**](ListingAlternateBrands.md) | List of Publisher&#39;s alternate brands where the listing is syndicated (only present if **v** is \&quot;20170420\&quot; or later) | [optional] 
 **login_url** | **string** | URL where the user can log in to the publisher to manage this listing at that publisher (only returned for Google My Business) | [optional] 
 **publisher_id** | **string** | ID of publisher associated with this listing | [optional] 
 **id** | **string** | ID of this listing | [optional] 

@@ -1,6 +1,6 @@
 <?php
 /**
- * PublishersResponse
+ * AssetTextContent
  *
  * PHP version 5
  *
@@ -44,7 +44,7 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * PublishersResponse Class Doc Comment
+ * AssetTextContent Class Doc Comment
  *
  * @category    Class */
 /**
@@ -53,21 +53,21 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PublishersResponse implements ArrayAccess
+class AssetTextContent implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PublishersResponse';
+    protected static $swaggerModelName = 'AssetTextContent';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'meta' => '\Yext\Client\Model\ResponseMeta',
-        'response' => '\Yext\Client\Model\PublishersResponseResponse'
+        'content' => 'string',
+        'locale' => 'string'
     ];
 
     public static function swaggerTypes()
@@ -80,8 +80,8 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'meta' => 'meta',
-        'response' => 'response'
+        'content' => 'content',
+        'locale' => 'locale'
     ];
 
 
@@ -90,8 +90,8 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'meta' => 'setMeta',
-        'response' => 'setResponse'
+        'content' => 'setContent',
+        'locale' => 'setLocale'
     ];
 
 
@@ -100,8 +100,8 @@ class PublishersResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'meta' => 'getMeta',
-        'response' => 'getResponse'
+        'content' => 'getContent',
+        'locale' => 'getLocale'
     ];
 
     public static function attributeMap()
@@ -135,8 +135,8 @@ class PublishersResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
-        $this->container['response'] = isset($data['response']) ? $data['response'] : null;
+        $this->container['content'] = isset($data['content']) ? $data['content'] : null;
+        $this->container['locale'] = isset($data['locale']) ? $data['locale'] : null;
     }
 
     /**
@@ -147,6 +147,12 @@ class PublishersResponse implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+        if ($this->container['content'] === null) {
+            $invalid_properties[] = "'content' can't be null";
+        }
+        if ($this->container['locale'] === null) {
+            $invalid_properties[] = "'locale' can't be null";
+        }
         return $invalid_properties;
     }
 
@@ -158,48 +164,54 @@ class PublishersResponse implements ArrayAccess
      */
     public function valid()
     {
+        if ($this->container['content'] === null) {
+            return false;
+        }
+        if ($this->container['locale'] === null) {
+            return false;
+        }
         return true;
     }
 
 
     /**
-     * Gets meta
-     * @return \Yext\Client\Model\ResponseMeta
+     * Gets content
+     * @return string
      */
-    public function getMeta()
+    public function getContent()
     {
-        return $this->container['meta'];
+        return $this->container['content'];
     }
 
     /**
-     * Sets meta
-     * @param \Yext\Client\Model\ResponseMeta $meta
+     * Sets content
+     * @param string $content The Text content.
      * @return $this
      */
-    public function setMeta($meta)
+    public function setContent($content)
     {
-        $this->container['meta'] = $meta;
+        $this->container['content'] = $content;
 
         return $this;
     }
 
     /**
-     * Gets response
-     * @return \Yext\Client\Model\PublishersResponseResponse
+     * Gets locale
+     * @return string
      */
-    public function getResponse()
+    public function getLocale()
     {
-        return $this->container['response'];
+        return $this->container['locale'];
     }
 
     /**
-     * Sets response
-     * @param \Yext\Client\Model\PublishersResponseResponse $response
+     * Sets locale
+     * @param string $locale The Text content locale.
      * @return $this
      */
-    public function setResponse($response)
+    public function setLocale($locale)
     {
-        $this->container['response'] = $response;
+        $this->container['locale'] = $locale;
 
         return $this;
     }

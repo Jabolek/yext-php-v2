@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhotoTest
+ * CustomFieldUpdateTest
  *
  * PHP version 5
  *
@@ -42,17 +42,17 @@
 namespace Yext\Client;
 
 /**
- * LocationPhotoTest Class Doc Comment
+ * CustomFieldUpdateTest Class Doc Comment
  *
  * @category    Class */
-// * @description LocationPhoto
+// * @description CustomFieldUpdate
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhotoTest extends \PHPUnit_Framework_TestCase
+class CustomFieldUpdateTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -88,17 +88,9 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "LocationPhoto"
+     * Test "CustomFieldUpdate"
      */
-    public function testLocationPhoto()
-    {
-
-    }
-
-    /**
-     * Test attribute "derivatives"
-     */
-    public function testPropertyDerivatives()
+    public function testCustomFieldUpdate()
     {
 
     }
@@ -112,33 +104,33 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "url"
+     * Test attribute "alternate_language_behavior"
      */
-    public function testPropertyUrl()
+    public function testPropertyAlternateLanguageBehavior()
     {
 
     }
 
     /**
-     * Test attribute "height"
+     * Test attribute "group"
      */
-    public function testPropertyHeight()
+    public function testPropertyGroup()
     {
 
     }
 
     /**
-     * Test attribute "width"
+     * Test attribute "name"
      */
-    public function testPropertyWidth()
+    public function testPropertyName()
     {
 
     }
 
     /**
-     * Test attribute "alternate_text"
+     * Test attribute "options"
      */
-    public function testPropertyAlternateText()
+    public function testPropertyOptions()
     {
 
     }

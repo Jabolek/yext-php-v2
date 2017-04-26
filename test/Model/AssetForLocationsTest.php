@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhotoTest
+ * AssetForLocationsTest
  *
  * PHP version 5
  *
@@ -42,17 +42,17 @@
 namespace Yext\Client;
 
 /**
- * LocationPhotoTest Class Doc Comment
+ * AssetForLocationsTest Class Doc Comment
  *
  * @category    Class */
-// * @description LocationPhoto
+// * @description AssetForLocations
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhotoTest extends \PHPUnit_Framework_TestCase
+class AssetForLocationsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -88,57 +88,49 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "LocationPhoto"
+     * Test "AssetForLocations"
      */
-    public function testLocationPhoto()
+    public function testAssetForLocations()
     {
 
     }
 
     /**
-     * Test attribute "derivatives"
+     * Test attribute "label_ids"
      */
-    public function testPropertyDerivatives()
+    public function testPropertyLabelIds()
     {
 
     }
 
     /**
-     * Test attribute "description"
+     * Test attribute "mapping_type"
      */
-    public function testPropertyDescription()
+    public function testPropertyMappingType()
     {
 
     }
 
     /**
-     * Test attribute "url"
+     * Test attribute "location_ids"
      */
-    public function testPropertyUrl()
+    public function testPropertyLocationIds()
     {
 
     }
 
     /**
-     * Test attribute "height"
+     * Test attribute "folder_id"
      */
-    public function testPropertyHeight()
+    public function testPropertyFolderId()
     {
 
     }
 
     /**
-     * Test attribute "width"
+     * Test attribute "label_operator"
      */
-    public function testPropertyWidth()
-    {
-
-    }
-
-    /**
-     * Test attribute "alternate_text"
-     */
-    public function testPropertyAlternateText()
+    public function testPropertyLabelOperator()
     {
 
     }

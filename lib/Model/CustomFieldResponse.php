@@ -1,6 +1,6 @@
 <?php
 /**
- * PublishersResponse
+ * CustomFieldResponse
  *
  * PHP version 5
  *
@@ -44,7 +44,7 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * PublishersResponse Class Doc Comment
+ * CustomFieldResponse Class Doc Comment
  *
  * @category    Class */
 /**
@@ -53,13 +53,13 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class PublishersResponse implements ArrayAccess
+class CustomFieldResponse implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'PublishersResponse';
+    protected static $swaggerModelName = 'CustomFieldResponse';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -67,7 +67,7 @@ class PublishersResponse implements ArrayAccess
       */
     protected static $swaggerTypes = [
         'meta' => '\Yext\Client\Model\ResponseMeta',
-        'response' => '\Yext\Client\Model\PublishersResponseResponse'
+        'response' => '\Yext\Client\Model\CustomField'
     ];
 
     public static function swaggerTypes()
@@ -185,7 +185,7 @@ class PublishersResponse implements ArrayAccess
 
     /**
      * Gets response
-     * @return \Yext\Client\Model\PublishersResponseResponse
+     * @return \Yext\Client\Model\CustomField
      */
     public function getResponse()
     {
@@ -194,7 +194,7 @@ class PublishersResponse implements ArrayAccess
 
     /**
      * Sets response
-     * @param \Yext\Client\Model\PublishersResponseResponse $response
+     * @param \Yext\Client\Model\CustomField $response
      * @return $this
      */
     public function setResponse($response)

@@ -248,7 +248,7 @@ $api_instance = new Yext\Client\Api\UserApi();
 $account_id = "account_id_example"; // string | 
 $v = "20161012"; // string | A date in `YYYYMMDD` format.
 $limit = 10; // int | Number of results to return.
-$offset = 0; // int | Number of results to skip. Used to page through results.
+$offset = 0; // int | Number of results to return.
 
 try {
     $result = $api_instance->getUsers($account_id, $v, $limit, $offset);
@@ -266,7 +266,7 @@ Name | Type | Description  | Notes
  **account_id** | **string**|  |
  **v** | **string**| A date in &#x60;YYYYMMDD&#x60; format. | [default to 20161012]
  **limit** | **int**| Number of results to return. | [optional] [default to 10]
- **offset** | **int**| Number of results to skip. Used to page through results. | [optional] [default to 0]
+ **offset** | **int**| Number of results to return. | [optional] [default to 0]
 
 ### Return type
 

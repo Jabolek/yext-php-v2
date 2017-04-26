@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationPhotoTest
+ * LocationPhotoDerivativesTest
  *
  * PHP version 5
  *
@@ -42,17 +42,17 @@
 namespace Yext\Client;
 
 /**
- * LocationPhotoTest Class Doc Comment
+ * LocationPhotoDerivativesTest Class Doc Comment
  *
  * @category    Class */
-// * @description LocationPhoto
+// * @description If no derivative photos are available, this attribute is omitted rather than empty.
 /**
  * @package     Yext\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class LocationPhotoTest extends \PHPUnit_Framework_TestCase
+class LocationPhotoDerivativesTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -88,25 +88,9 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "LocationPhoto"
+     * Test "LocationPhotoDerivatives"
      */
-    public function testLocationPhoto()
-    {
-
-    }
-
-    /**
-     * Test attribute "derivatives"
-     */
-    public function testPropertyDerivatives()
-    {
-
-    }
-
-    /**
-     * Test attribute "description"
-     */
-    public function testPropertyDescription()
+    public function testLocationPhotoDerivatives()
     {
 
     }
@@ -120,14 +104,6 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "height"
-     */
-    public function testPropertyHeight()
-    {
-
-    }
-
-    /**
      * Test attribute "width"
      */
     public function testPropertyWidth()
@@ -136,9 +112,9 @@ class LocationPhotoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "alternate_text"
+     * Test attribute "height"
      */
-    public function testPropertyAlternateText()
+    public function testPropertyHeight()
     {
 
     }

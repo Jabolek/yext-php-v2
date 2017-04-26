@@ -88,11 +88,13 @@ Class | Method | HTTP request | Description
 *AnalyticsApi* | [**reportStatus**](docs/Api/AnalyticsApi.md#reportstatus) | **GET** /accounts/{accountId}/analytics/standardreports/{reportId} | Report Status
 *HealthCheckApi* | [**healthCheck**](docs/Api/HealthCheckApi.md#healthcheck) | **GET** /healthy | Health Check
 *KnowledgeManagerApi* | [**createBio**](docs/Api/KnowledgeManagerApi.md#createbio) | **POST** /accounts/{accountId}/bios | Bios: Create
+*KnowledgeManagerApi* | [**createCustomField**](docs/Api/KnowledgeManagerApi.md#createcustomfield) | **POST** /accounts/{accountId}/customfields | Custom Fields: Create
 *KnowledgeManagerApi* | [**createEvent**](docs/Api/KnowledgeManagerApi.md#createevent) | **POST** /accounts/{accountId}/events | Events: Create
 *KnowledgeManagerApi* | [**createLocation**](docs/Api/KnowledgeManagerApi.md#createlocation) | **POST** /accounts/{accountId}/locations | Locations: Create
 *KnowledgeManagerApi* | [**createMenu**](docs/Api/KnowledgeManagerApi.md#createmenu) | **POST** /accounts/{accountId}/menus | Menus: Create
 *KnowledgeManagerApi* | [**createProduct**](docs/Api/KnowledgeManagerApi.md#createproduct) | **POST** /accounts/{accountId}/products | Products: Create
 *KnowledgeManagerApi* | [**deleteBioList**](docs/Api/KnowledgeManagerApi.md#deletebiolist) | **DELETE** /accounts/{accountId}/bios/{listId} | Bios: Delete
+*KnowledgeManagerApi* | [**deleteCustomField**](docs/Api/KnowledgeManagerApi.md#deletecustomfield) | **DELETE** /accounts/{accountId}/customFields/{customFieldId} | Custom Fields: Delete
 *KnowledgeManagerApi* | [**deleteEventList**](docs/Api/KnowledgeManagerApi.md#deleteeventlist) | **DELETE** /accounts/{accountId}/events/{listId} | Events: Delete
 *KnowledgeManagerApi* | [**deleteLanguageProfile**](docs/Api/KnowledgeManagerApi.md#deletelanguageprofile) | **DELETE** /accounts/{accountId}/locations/{locationId}/profiles/{language_code} | Language Profiles: Delete
 *KnowledgeManagerApi* | [**deleteMenuList**](docs/Api/KnowledgeManagerApi.md#deletemenulist) | **DELETE** /accounts/{accountId}/menus/{listId} | Menus: Delete
@@ -100,6 +102,7 @@ Class | Method | HTTP request | Description
 *KnowledgeManagerApi* | [**getBio**](docs/Api/KnowledgeManagerApi.md#getbio) | **GET** /accounts/{accountId}/bios/{listId} | Bios: Get
 *KnowledgeManagerApi* | [**getBios**](docs/Api/KnowledgeManagerApi.md#getbios) | **GET** /accounts/{accountId}/bios | Bios: List
 *KnowledgeManagerApi* | [**getBusinessCategories**](docs/Api/KnowledgeManagerApi.md#getbusinesscategories) | **GET** /categories | Categories: List
+*KnowledgeManagerApi* | [**getCustomField**](docs/Api/KnowledgeManagerApi.md#getcustomfield) | **GET** /accounts/{accountId}/customFields/{customFieldId} | Custom Fields: Get
 *KnowledgeManagerApi* | [**getCustomFields**](docs/Api/KnowledgeManagerApi.md#getcustomfields) | **GET** /accounts/{accountId}/customfields | Custom Fields: List
 *KnowledgeManagerApi* | [**getEvent**](docs/Api/KnowledgeManagerApi.md#getevent) | **GET** /accounts/{accountId}/events/{listId} | Events: Get
 *KnowledgeManagerApi* | [**getEvents**](docs/Api/KnowledgeManagerApi.md#getevents) | **GET** /accounts/{accountId}/events | Events: List
@@ -113,7 +116,9 @@ Class | Method | HTTP request | Description
 *KnowledgeManagerApi* | [**getMenus**](docs/Api/KnowledgeManagerApi.md#getmenus) | **GET** /accounts/{accountId}/menus | Menus: List
 *KnowledgeManagerApi* | [**getProduct**](docs/Api/KnowledgeManagerApi.md#getproduct) | **GET** /accounts/{accountId}/products/{listId} | Products: Get
 *KnowledgeManagerApi* | [**getProducts**](docs/Api/KnowledgeManagerApi.md#getproducts) | **GET** /accounts/{accountId}/products | Products: List
+*KnowledgeManagerApi* | [**searchLocations**](docs/Api/KnowledgeManagerApi.md#searchlocations) | **GET** /accounts/{accountId}/locationsearch | Locations: Search
 *KnowledgeManagerApi* | [**updateBio**](docs/Api/KnowledgeManagerApi.md#updatebio) | **PUT** /accounts/{accountId}/bios/{listId} | Bios: Update
+*KnowledgeManagerApi* | [**updateCustomField**](docs/Api/KnowledgeManagerApi.md#updatecustomfield) | **PUT** /accounts/{accountId}/customFields/{customFieldId} | Custom Fields: Update
 *KnowledgeManagerApi* | [**updateEvent**](docs/Api/KnowledgeManagerApi.md#updateevent) | **PUT** /accounts/{accountId}/events/{listId} | Events: Update
 *KnowledgeManagerApi* | [**updateLocation**](docs/Api/KnowledgeManagerApi.md#updatelocation) | **PUT** /accounts/{accountId}/locations/{locationId} | Locations: Update
 *KnowledgeManagerApi* | [**updateMenu**](docs/Api/KnowledgeManagerApi.md#updatemenu) | **PUT** /accounts/{accountId}/menus/{listId} | Menus: Update
@@ -167,6 +172,9 @@ Class | Method | HTTP request | Description
  - [ActivityFilter](docs/Model/ActivityFilter.md)
  - [ActivityLogRequest](docs/Model/ActivityLogRequest.md)
  - [AnalyticsFilter](docs/Model/AnalyticsFilter.md)
+ - [Asset](docs/Model/Asset.md)
+ - [AssetForLocations](docs/Model/AssetForLocations.md)
+ - [AssetTextContent](docs/Model/AssetTextContent.md)
  - [Author](docs/Model/Author.md)
  - [BaseEcl](docs/Model/BaseEcl.md)
  - [BaseEclItem](docs/Model/BaseEclItem.md)
@@ -191,9 +199,12 @@ Class | Method | HTTP request | Description
  - [CreateReviewInvitationsResponse](docs/Model/CreateReviewInvitationsResponse.md)
  - [CreateUserRequest](docs/Model/CreateUserRequest.md)
  - [CustomField](docs/Model/CustomField.md)
+ - [CustomFieldResponse](docs/Model/CustomFieldResponse.md)
+ - [CustomFieldUpdate](docs/Model/CustomFieldUpdate.md)
  - [CustomFieldsResponse](docs/Model/CustomFieldsResponse.md)
  - [CustomFieldsResponseResponse](docs/Model/CustomFieldsResponseResponse.md)
  - [CustomOption](docs/Model/CustomOption.md)
+ - [CustomValidation](docs/Model/CustomValidation.md)
  - [Duplicate](docs/Model/Duplicate.md)
  - [DuplicateUnavailableReason](docs/Model/DuplicateUnavailableReason.md)
  - [DuplicatesResponse](docs/Model/DuplicatesResponse.md)
@@ -223,6 +234,7 @@ Class | Method | HTTP request | Description
  - [LinkedAccountsResponse](docs/Model/LinkedAccountsResponse.md)
  - [LinkedAccountsResponseResponse](docs/Model/LinkedAccountsResponseResponse.md)
  - [Listing](docs/Model/Listing.md)
+ - [ListingAlternateBrands](docs/Model/ListingAlternateBrands.md)
  - [ListingStatusDetail](docs/Model/ListingStatusDetail.md)
  - [ListingsResponse](docs/Model/ListingsResponse.md)
  - [ListingsResponseResponse](docs/Model/ListingsResponseResponse.md)
@@ -233,6 +245,7 @@ Class | Method | HTTP request | Description
  - [LocationGoogleAttributes](docs/Model/LocationGoogleAttributes.md)
  - [LocationHolidayHours](docs/Model/LocationHolidayHours.md)
  - [LocationPhoto](docs/Model/LocationPhoto.md)
+ - [LocationPhotoDerivatives](docs/Model/LocationPhotoDerivatives.md)
  - [LocationResponse](docs/Model/LocationResponse.md)
  - [LocationServiceArea](docs/Model/LocationServiceArea.md)
  - [LocationType](docs/Model/LocationType.md)
@@ -266,6 +279,7 @@ Class | Method | HTTP request | Description
  - [PublisherSuggestionsResponse](docs/Model/PublisherSuggestionsResponse.md)
  - [PublisherSuggestionsResponseResponse](docs/Model/PublisherSuggestionsResponseResponse.md)
  - [PublishersResponse](docs/Model/PublishersResponse.md)
+ - [PublishersResponseResponse](docs/Model/PublishersResponseResponse.md)
  - [ReportStatusResponse](docs/Model/ReportStatusResponse.md)
  - [ReportStatusResponseResponse](docs/Model/ReportStatusResponseResponse.md)
  - [ResponseError](docs/Model/ResponseError.md)
