@@ -5,31 +5,19 @@
  *
  * @category Class
  * @package  Yext\Client
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * Yext API
  *
- * 
+ * # Policies and Conventions  This section gives you the basic information you need to use our APIs.  ## API Availability  We currently offer three APIs: * **Knowledge API** * **Live API** * **Administrative API**  Each API is designed for a particular set of users.  To determine which APIs are available to users like you, see the \"Overview\" page in the Docs section of this site.  ## Authentication All requests must be authenticated using an app’s API key.  <pre>GET https://api.yext.com/v2/accounts/[accountId]/locations?<b>api_key=API_KEY</b>&v=YYYYMMDD</pre>  The API key should be kept secret.  ## Versioning All requests must be versioned using the **`v`** parameter.  <pre>GET https://api.yext.com/v2/accounts/[accountId]/locations?api_key=API_KEY&<b>v=YYYYMMDD</b></pre>  The **`v`** parameter (a date in `YYYYMMDD` format) is designed to give you the freedom to adapt to Yext API changes on your own schedule. When you pass this parameter, any backward-incompatiable changes we made to the API after the specified date will not affect the behavior of the request or the content of the response. You will still benefit from any bug fixes or backward-compatible changes we may have made after the date you've specified.  **NOTE:** Yext has the ability to make changes that affect previous versions of the API, if necessary.  ## Serialization API v2 only accepts data in JSON format.  ## Content-Type Headers For all requests that include a request body, the `Content-Type` header must be included and set to `application/json`.  ## PUT Requests Generally, all `PUT` operations behave as true RESTful `PUT`s, in which entire objects are overwritten with the provided content.  However, certain endpoints used to work with large, frequently-changing object models may have different semantics to prevent the accidental removal of content (e.g., Locations: Update lets you omit fields you don’t wish to change).  ## Errors and Warnings There are three kinds of issues that can be reported for a given request:  * **`FATAL_ERROR`**     * An issue caused the entire request to be rejected. * **`NON_FATAL_ERROR`**     * An item is rejected, but other items present in the request are accepted (e.g., one invalid Product List item).     * A field is rejected, but the item otherwise is accepted (e.g., invalid website URL in a Location). * **`WARNING`**     * The request did not adhere to our best practices or recommendations, but the data was accepted anyway (e.g., data was sent that may cause some listings to become unavailable, a deprecated API was used, or we changed the format of a field's content to meet our requirements).  **For a complete list of error codes and their meanings, see the \"Error Messages\" page in the Support section of this site.**  ## Validation Modes  API v2 will support two request validation modes: *Strict Mode* and *Lenient Mode*.  In Strict Mode, both `FATAL_ERROR`s and `NON_FATAL_ERROR`s are reported simply as `FATAL_ERROR`s, and any error will cause the entire request to fail.  In Lenient Mode, `FATAL_ERROR`s and `NON_FATAL_ERROR`s are reported as such, and only `FATAL_ERROR`s will cause a request to fail.  All requests will be processed in Strict Mode by default.  To activate Lenient Mode, append the parameter `validation=lenient` to your request URLs.  ### Dates and times * We always use milliseconds since epoch (a.k.a. Unix time) for timestamps (e.g., review creation times, webhook update times). * We always use ISO 8601 without timezone for local date times (e.g., Event start time, Event end time). Event times are always interpreted in the local timezone of their associated locations. * Dates are transmitted as strings: `YYYY-MM-DD`.  ## Account ID In keeping with RESTful design principles, every URL in API v2 has an account ID prefix. This prefix helps to ensure that you have unique URLs for all resources.  In addition to specifying resources by explicit account ID, the following two macros are defined: * **`me`** - refers to the account that owns the API key sent with the request * **`all`** - refers to the account that owns the API key sent with the request, as well as all sub-accounts (recursively)  **IMPORTANT:** The **`me`** macro is supported in all API methods.  The **`all`** macro will only be supported in certain URLs. Currently, it can only be used in Analytics and Reviews endpoints.  ### Examples This URL refers to an analytics report for all locations in account 123. <pre>https://api.yext.com/v2/accounts/<b>123</b>/analytics/reports?api_key=456&v=20160822</pre>  This URL refers to an analytics report for all locations in the account that owns API key 456. <pre>https://api.yext.com/v2/accounts/<b>me</b>/analytics/reports?<b>api_key=456</b>&v=20160822</pre>  This URL refers to an analytics report for all locations in the account that owns API key 456, as well as all locations from any of its child accounts. <pre>https://api.yext.com/v2/accounts/<b>all</b>/analytics/reports?<b>api_key=456</b>&v=20160822</pre>  ## Actor Headers  To attribute changes to a particular user, all `PUT`, `POST`, and `DELETE` requests may be passed with the following headers.  **NOTE:** If you choose to provide actor headers, and we are unable to authenticate the request using the values you provide, the request will result in an error and fail.  * Attribute activity to customer user via username     * Header: `Yext-Username`     * Value: Customer user’s username * Attribute activity to customer user via Yext user ID     * Header: `Yext-User-Id`     * Value: Customer user’s Yext user ID  Changes will be logged as follows:  * App with no designated actor     * History Entry \"Updated By\" Value: `App [App ID] - ‘[App Name]’`     * Example: `App 432 - ‘Hello World App’` * App with customer user actor     * History Entry \"Updated By\" Value: `[user name] ([user email]) (App [App ID] - ‘[App Name]’)`     * Example: `Jordan Smith (jsmith@example.com) (App 432 - ‘Hello World App’)`  ## Response Format * **`meta`**     * Response metadata * **`meta.uuid`**     * Unique ID for this request / response * **`meta.errors[]`**     * List of errors and warnings * **`meta.errors[].code`**     * Code that uniquely identifies the error or warning * **`meta.errors[].type`**     * One of:         * `FATAL_ERROR`         * `NON_FATAL_ERROR`         * `WARNING`     * See \"Errors and Warnings\" above for details. * **`meta.errors[].message`**     * An explanation of the issue * **`response`**     * The main content (body) of the response  Example: <pre><code> {     \"meta\": {         \"uuid\": \"bb0c7e19-4dc3-4891-bfa5-8593b1f124ad\",         \"errors\": [             {                 \"code\": ...error code...,                 \"type\": ...error, fatal error, non fatal error, or warning...,                 \"message\": ...explanation of the issue...             }         ]     },     \"response\": {         ...results...     } } </code></pre>  ## Status Codes * `200 OK`    * Either there are no errors or warnings, or the only issues are of type `WARNING`. * `207 Multi-Status`     * There are errors of type `itemError` or `fieldError` (but none of type `requestError`). * `400 Bad Request`     * A parameter is invalid, or a required parameter is missing. This includes the case where no API key is provided and the case where a resource ID is specified incorrectly in a path.     * This status is if any of the response errors are of type `requestError`. * `401 Unauthorized`     * The API key provided is invalid. * `403 Forbidden`     * The requested information cannot be viewed by the acting user. * `404 Not Found`     * The endpoint does not exist. * `405 Method Not Allowed`     * The request is using a method that is not allowed (e.g., `POST` with a `GET`-only endpoint). * `409 Conflict`     * The request could not be completed in its current state.     * Use the information included in the response to modify the request and retry. * `429 Too Many Requests`     * You have exceeded your rate limit / quota. * `500 Internal Server Error`     * Yext’s servers are not operating as expected. The request is likely valid but should be resent later. * `504 Timeout`     * Yext’s servers took too long to handle this request, and it timed out.  ## Quotas and Rate Limits Default quotas and rate limits are as follows.  * **Knowledge API** *(includes Analytics, PowerListings®, Knowledge Manager, Reviews, Social, and User endpoints)*: 5,000 requests per hour * **Administrative API**: 1,000 requests per hour * **Live API**: 100,000 requests per hour  Hourly quotas are calculated from the beginning of the hour (minute zero, `:00`), not on a rolling basis past 60 minutes.  **NOTE:** Webhook requests do not count towards an account’s quota.  For the most current and accurate rate-limit usage information for a particular request type, check the **`Rate-Limit-Remaining`** and **`Rate-Limit-Limit`** HTTP headers of your API responses.  If you are currently over your limit, our API will return a `429` error, and the response object returned by our API will be empty. We will also include a **`Rate-Limit-Reset`** header in the response, which indicates when you will have additional quota.  ## Client- vs. Yext-assigned IDs You can set the ID for the following objects when you create them. If you do not provide an ID, Yext will generate one for you.  * Account * User * Location * Bio List * Menu * Product List * Event List * Bio List Item * Menu Item * Product List Item * Event List Item  ## Logging All API requests are logged. API logs can be found in your Developer Console and are stored for 90 days.
  *
  * OpenAPI spec version: 2.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 /**
@@ -50,8 +38,7 @@ use \Yext\Client\ObjectSerializer;
  *
  * @category Class
  * @package  Yext\Client
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 class KnowledgeManagerApi
@@ -72,7 +59,6 @@ class KnowledgeManagerApi
     {
         if ($apiClient === null) {
             $apiClient = new ApiClient();
-            $apiClient->getConfig()->setHost('https://api.yext.com/v2');
         }
 
         $this->apiClient = $apiClient;
@@ -99,6 +85,121 @@ class KnowledgeManagerApi
     {
         $this->apiClient = $apiClient;
         return $this;
+    }
+
+    /**
+     * Operation createAsset
+     *
+     * Assets: Create
+     *
+     * @param string $account_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param \Yext\Client\Model\Asset $asset_request  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\IdResponse
+     */
+    public function createAsset($account_id, $v, $asset_request)
+    {
+        list($response) = $this->createAssetWithHttpInfo($account_id, $v, $asset_request);
+        return $response;
+    }
+
+    /**
+     * Operation createAssetWithHttpInfo
+     *
+     * Assets: Create
+     *
+     * @param string $account_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param \Yext\Client\Model\Asset $asset_request  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\IdResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createAssetWithHttpInfo($account_id, $v, $asset_request)
+    {
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling createAsset');
+        }
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling createAsset');
+        }
+        // verify the required parameter 'asset_request' is set
+        if ($asset_request === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $asset_request when calling createAsset');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/assets";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // body params
+        $_tempBody = null;
+        if (isset($asset_request)) {
+            $_tempBody = $asset_request;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'POST',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\IdResponse',
+                '/accounts/{accountId}/assets'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\IdResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 0:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
     }
 
     /**
@@ -206,7 +307,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -321,7 +422,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -436,7 +537,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -551,7 +652,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -666,7 +767,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -781,7 +882,125 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteAsset
+     *
+     * Assets: Delete
+     *
+     * @param string $account_id  (required)
+     * @param string $asset_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\ErrorResponse
+     */
+    public function deleteAsset($account_id, $asset_id, $v)
+    {
+        list($response) = $this->deleteAssetWithHttpInfo($account_id, $asset_id, $v);
+        return $response;
+    }
+
+    /**
+     * Operation deleteAssetWithHttpInfo
+     *
+     * Assets: Delete
+     *
+     * @param string $account_id  (required)
+     * @param string $asset_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteAssetWithHttpInfo($account_id, $asset_id, $v)
+    {
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling deleteAsset');
+        }
+        // verify the required parameter 'asset_id' is set
+        if ($asset_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $asset_id when calling deleteAsset');
+        }
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling deleteAsset');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/assets/{assetId}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($asset_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "assetId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($asset_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'DELETE',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\ErrorResponse',
+                '/accounts/{accountId}/assets/{assetId}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\ErrorResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -899,7 +1118,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -952,7 +1171,7 @@ class KnowledgeManagerApi
             throw new \InvalidArgumentException('Missing the required parameter $custom_field_id when calling deleteCustomField');
         }
         // parse inputs
-        $resourcePath = "/accounts/{accountId}/customFields/{customFieldId}";
+        $resourcePath = "/accounts/{accountId}/customfields/{customFieldId}";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -1007,7 +1226,7 @@ class KnowledgeManagerApi
                 $httpBody,
                 $headerParams,
                 '\Yext\Client\Model\ErrorResponse',
-                '/accounts/{accountId}/customFields/{customFieldId}'
+                '/accounts/{accountId}/customfields/{customFieldId}'
             );
 
             return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\ErrorResponse', $httpHeader), $statusCode, $httpHeader];
@@ -1017,7 +1236,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1135,7 +1354,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1267,7 +1486,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1385,7 +1604,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1503,7 +1722,125 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getAsset
+     *
+     * Assets: Get
+     *
+     * @param string $account_id  (required)
+     * @param string $asset_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\AssetResponse
+     */
+    public function getAsset($account_id, $asset_id, $v)
+    {
+        list($response) = $this->getAssetWithHttpInfo($account_id, $asset_id, $v);
+        return $response;
+    }
+
+    /**
+     * Operation getAssetWithHttpInfo
+     *
+     * Assets: Get
+     *
+     * @param string $account_id  (required)
+     * @param string $asset_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\AssetResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getAssetWithHttpInfo($account_id, $asset_id, $v)
+    {
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling getAsset');
+        }
+        // verify the required parameter 'asset_id' is set
+        if ($asset_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $asset_id when calling getAsset');
+        }
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling getAsset');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/assets/{assetId}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($asset_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "assetId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($asset_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\AssetResponse',
+                '/accounts/{accountId}/assets/{assetId}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\AssetResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\AssetResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1621,7 +1958,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\BioListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1639,7 +1976,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\BioListsResponse
      */
@@ -1657,7 +1994,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\BioListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -1671,8 +2008,8 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling getBios');
         }
-        if (!is_null($limit) && ($limit > 50.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getBios, must be smaller than or equal to 50.0.');
+        if (!is_null($limit) && ($limit > 50)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getBios, must be smaller than or equal to 50.');
         }
 
         // parse inputs
@@ -1741,7 +2078,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\BioListsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1843,7 +2180,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\BusinessCategoriesResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1896,7 +2233,7 @@ class KnowledgeManagerApi
             throw new \InvalidArgumentException('Missing the required parameter $custom_field_id when calling getCustomField');
         }
         // parse inputs
-        $resourcePath = "/accounts/{accountId}/customFields/{customFieldId}";
+        $resourcePath = "/accounts/{accountId}/customfields/{customFieldId}";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -1951,7 +2288,7 @@ class KnowledgeManagerApi
                 $httpBody,
                 $headerParams,
                 '\Yext\Client\Model\CustomFieldResponse',
-                '/accounts/{accountId}/customFields/{customFieldId}'
+                '/accounts/{accountId}/customfields/{customFieldId}'
             );
 
             return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\CustomFieldResponse', $httpHeader), $statusCode, $httpHeader];
@@ -1961,7 +2298,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\CustomFieldResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -1978,7 +2315,7 @@ class KnowledgeManagerApi
      *
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param string $account_id  (required)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\CustomFieldsResponse
@@ -1996,7 +2333,7 @@ class KnowledgeManagerApi
      *
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param string $account_id  (required)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\CustomFieldsResponse, HTTP status code, HTTP response headers (array of strings)
@@ -2011,8 +2348,8 @@ class KnowledgeManagerApi
         if ($account_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $account_id when calling getCustomFields');
         }
-        if (!is_null($limit) && ($limit > 1000.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getCustomFields, must be smaller than or equal to 1000.0.');
+        if (!is_null($limit) && ($limit > 1000)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getCustomFields, must be smaller than or equal to 1000.');
         }
 
         // parse inputs
@@ -2081,7 +2418,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\CustomFieldsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2199,7 +2536,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\EventListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2217,7 +2554,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\EventListsResponse
      */
@@ -2235,7 +2572,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\EventListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -2249,8 +2586,8 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling getEvents');
         }
-        if (!is_null($limit) && ($limit > 50.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getEvents, must be smaller than or equal to 50.0.');
+        if (!is_null($limit) && ($limit > 50)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getEvents, must be smaller than or equal to 50.');
         }
 
         // parse inputs
@@ -2319,7 +2656,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\EventListsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2409,7 +2746,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\GoogleFieldsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2547,7 +2884,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\LocationResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2671,7 +3008,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\LanguageProfilesResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2795,7 +3132,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\LocationResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2812,7 +3149,7 @@ class KnowledgeManagerApi
      *
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\FoldersResponse
@@ -2830,7 +3167,7 @@ class KnowledgeManagerApi
      *
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @param int $limit Number of results to return. (optional, default to 100)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\FoldersResponse, HTTP status code, HTTP response headers (array of strings)
@@ -2845,8 +3182,8 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling getLocationFolders');
         }
-        if (!is_null($limit) && ($limit > 1000.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getLocationFolders, must be smaller than or equal to 1000.0.');
+        if (!is_null($limit) && ($limit > 1000)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getLocationFolders, must be smaller than or equal to 1000.');
         }
 
         // parse inputs
@@ -2915,7 +3252,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\FoldersResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -2933,7 +3270,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\LocationsResponse
@@ -2952,7 +3289,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @param bool $resolve_placeholders Optional parameter to resolve all embedded fields in a Location object response. - &#x60;false&#x60; (default): Location object returns placeholder labels, e.g. \&quot;Your [[CITY]] store\&quot; - &#x60;true&#x60;: Location object returns placeholder values, e.g. \&quot;Your Fairfax store\&quot; (optional, default to false)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\LocationsResponse, HTTP status code, HTTP response headers (array of strings)
@@ -2967,8 +3304,8 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling getLocations');
         }
-        if (!is_null($limit) && ($limit > 50.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getLocations, must be smaller than or equal to 50.0.');
+        if (!is_null($limit) && ($limit > 50)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getLocations, must be smaller than or equal to 50.');
         }
 
         // parse inputs
@@ -3041,7 +3378,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\LocationsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3159,7 +3496,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\MenuListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3177,7 +3514,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\MenuListsResponse
      */
@@ -3195,7 +3532,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\MenuListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -3209,8 +3546,8 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling getMenus');
         }
-        if (!is_null($limit) && ($limit > 50.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getMenus, must be smaller than or equal to 50.0.');
+        if (!is_null($limit) && ($limit > 50)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getMenus, must be smaller than or equal to 50.');
         }
 
         // parse inputs
@@ -3279,7 +3616,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\MenuListsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3397,7 +3734,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ProductListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3415,7 +3752,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return \Yext\Client\Model\ProductListsResponse
      */
@@ -3433,7 +3770,7 @@ class KnowledgeManagerApi
      * @param string $account_id  (required)
      * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
      * @param int $limit Number of results to return. (optional, default to 10)
-     * @param int $offset Number of results to return. (optional, default to 0)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
      * @throws \Yext\Client\ApiException on non-2xx response
      * @return array of \Yext\Client\Model\ProductListsResponse, HTTP status code, HTTP response headers (array of strings)
      */
@@ -3447,8 +3784,8 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling getProducts');
         }
-        if (!is_null($limit) && ($limit > 50.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getProducts, must be smaller than or equal to 50.0.');
+        if (!is_null($limit) && ($limit > 50)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.getProducts, must be smaller than or equal to 50.');
         }
 
         // parse inputs
@@ -3517,7 +3854,127 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ProductListsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listAssets
+     *
+     * Assets: List
+     *
+     * @param string $account_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $limit Number of results to return. (optional, default to 100)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\AssetsResponse
+     */
+    public function listAssets($account_id, $v, $offset = null, $limit = null)
+    {
+        list($response) = $this->listAssetsWithHttpInfo($account_id, $v, $offset, $limit);
+        return $response;
+    }
+
+    /**
+     * Operation listAssetsWithHttpInfo
+     *
+     * Assets: List
+     *
+     * @param string $account_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param int $offset Number of results to skip. Used to page through results. (optional, default to 0)
+     * @param int $limit Number of results to return. (optional, default to 100)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\AssetsResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listAssetsWithHttpInfo($account_id, $v, $offset = null, $limit = null)
+    {
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling listAssets');
+        }
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling listAssets');
+        }
+        if (!is_null($limit) && ($limit > 1000)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.listAssets, must be smaller than or equal to 1000.');
+        }
+
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/assets";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // query params
+        if ($offset !== null) {
+            $queryParams['offset'] = $this->apiClient->getSerializer()->toQueryValue($offset);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\AssetsResponse',
+                '/accounts/{accountId}/assets'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\AssetsResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\AssetsResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3569,12 +4026,12 @@ class KnowledgeManagerApi
         if ($v === null) {
             throw new \InvalidArgumentException('Missing the required parameter $v when calling searchLocations');
         }
-        if (!is_null($limit) && ($limit > 50.0)) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.searchLocations, must be smaller than or equal to 50.0.');
+        if (!is_null($limit) && ($limit > 50)) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling KnowledgeManagerApi.searchLocations, must be smaller than or equal to 50.');
         }
 
-        if (!is_null($offset) && ($offset > 9950.0)) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling KnowledgeManagerApi.searchLocations, must be smaller than or equal to 9950.0.');
+        if (!is_null($offset) && ($offset > 9950)) {
+            throw new \InvalidArgumentException('invalid value for "$offset" when calling KnowledgeManagerApi.searchLocations, must be smaller than or equal to 9950.');
         }
 
         // parse inputs
@@ -3647,7 +4104,136 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\LocationsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateAsset
+     *
+     * Assets: Update
+     *
+     * @param string $account_id  (required)
+     * @param string $asset_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param \Yext\Client\Model\Asset $asset_request  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return \Yext\Client\Model\IdResponse
+     */
+    public function updateAsset($account_id, $asset_id, $v, $asset_request)
+    {
+        list($response) = $this->updateAssetWithHttpInfo($account_id, $asset_id, $v, $asset_request);
+        return $response;
+    }
+
+    /**
+     * Operation updateAssetWithHttpInfo
+     *
+     * Assets: Update
+     *
+     * @param string $account_id  (required)
+     * @param string $asset_id  (required)
+     * @param string $v A date in &#x60;YYYYMMDD&#x60; format. (required)
+     * @param \Yext\Client\Model\Asset $asset_request  (required)
+     * @throws \Yext\Client\ApiException on non-2xx response
+     * @return array of \Yext\Client\Model\IdResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateAssetWithHttpInfo($account_id, $asset_id, $v, $asset_request)
+    {
+        // verify the required parameter 'account_id' is set
+        if ($account_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $account_id when calling updateAsset');
+        }
+        // verify the required parameter 'asset_id' is set
+        if ($asset_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $asset_id when calling updateAsset');
+        }
+        // verify the required parameter 'v' is set
+        if ($v === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $v when calling updateAsset');
+        }
+        // verify the required parameter 'asset_request' is set
+        if ($asset_request === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $asset_request when calling updateAsset');
+        }
+        // parse inputs
+        $resourcePath = "/accounts/{accountId}/assets/{assetId}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($v !== null) {
+            $queryParams['v'] = $this->apiClient->getSerializer()->toQueryValue($v);
+        }
+        // path params
+        if ($account_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "accountId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($account_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($asset_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "assetId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($asset_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // body params
+        $_tempBody = null;
+        if (isset($asset_request)) {
+            $_tempBody = $asset_request;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+        if (strlen($apiKey) !== 0) {
+            $queryParams['api_key'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'PUT',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Yext\Client\Model\IdResponse',
+                '/accounts/{accountId}/assets/{assetId}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\IdResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3776,7 +4362,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\BioListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -3835,7 +4421,7 @@ class KnowledgeManagerApi
             throw new \InvalidArgumentException('Missing the required parameter $body when calling updateCustomField');
         }
         // parse inputs
-        $resourcePath = "/accounts/{accountId}/customFields/{customFieldId}";
+        $resourcePath = "/accounts/{accountId}/customfields/{customFieldId}";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -3895,7 +4481,7 @@ class KnowledgeManagerApi
                 $httpBody,
                 $headerParams,
                 '\Yext\Client\Model\IdResponse',
-                '/accounts/{accountId}/customFields/{customFieldId}'
+                '/accounts/{accountId}/customfields/{customFieldId}'
             );
 
             return [$this->apiClient->getSerializer()->deserialize($response, '\Yext\Client\Model\IdResponse', $httpHeader), $statusCode, $httpHeader];
@@ -3905,7 +4491,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -4034,7 +4620,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\EventListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -4163,7 +4749,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\IdResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -4292,7 +4878,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\MenuListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -4421,7 +5007,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ProductListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -4574,7 +5160,7 @@ class KnowledgeManagerApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                default:
+                case 0:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Yext\Client\Model\ErrorResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;

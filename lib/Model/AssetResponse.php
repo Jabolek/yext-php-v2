@@ -1,6 +1,6 @@
 <?php
 /**
- * MaximumDatesResponseResponse
+ * AssetResponse
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ namespace Yext\Client\Model;
 use \ArrayAccess;
 
 /**
- * MaximumDatesResponseResponse Class Doc Comment
+ * AssetResponse Class Doc Comment
  *
  * @category    Class
  * @package     Yext\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class MaximumDatesResponseResponse implements ArrayAccess
+class AssetResponse implements ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -47,15 +47,15 @@ class MaximumDatesResponseResponse implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'MaximumDatesResponse_response';
+    protected static $swaggerModelName = 'AssetResponse';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'standard_max_date' => '\DateTime',
-        'bing_max_date' => '\DateTime'
+        'meta' => '\Yext\Client\Model\ResponseMeta',
+        'response' => '\Yext\Client\Model\Asset'
     ];
 
     public static function swaggerTypes()
@@ -68,8 +68,8 @@ class MaximumDatesResponseResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'standard_max_date' => 'standardMaxDate',
-        'bing_max_date' => 'bingMaxDate'
+        'meta' => 'meta',
+        'response' => 'response'
     ];
 
 
@@ -78,8 +78,8 @@ class MaximumDatesResponseResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'standard_max_date' => 'setStandardMaxDate',
-        'bing_max_date' => 'setBingMaxDate'
+        'meta' => 'setMeta',
+        'response' => 'setResponse'
     ];
 
 
@@ -88,8 +88,8 @@ class MaximumDatesResponseResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'standard_max_date' => 'getStandardMaxDate',
-        'bing_max_date' => 'getBingMaxDate'
+        'meta' => 'getMeta',
+        'response' => 'getResponse'
     ];
 
     public static function attributeMap()
@@ -123,8 +123,8 @@ class MaximumDatesResponseResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['standard_max_date'] = isset($data['standard_max_date']) ? $data['standard_max_date'] : null;
-        $this->container['bing_max_date'] = isset($data['bing_max_date']) ? $data['bing_max_date'] : null;
+        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
+        $this->container['response'] = isset($data['response']) ? $data['response'] : null;
     }
 
     /**
@@ -153,43 +153,43 @@ class MaximumDatesResponseResponse implements ArrayAccess
 
 
     /**
-     * Gets standard_max_date
-     * @return \DateTime
+     * Gets meta
+     * @return \Yext\Client\Model\ResponseMeta
      */
-    public function getStandardMaxDate()
+    public function getMeta()
     {
-        return $this->container['standard_max_date'];
+        return $this->container['meta'];
     }
 
     /**
-     * Sets standard_max_date
-     * @param \DateTime $standard_max_date The date through which reporting data is available from PowerListings® publishers other than Bing.
+     * Sets meta
+     * @param \Yext\Client\Model\ResponseMeta $meta
      * @return $this
      */
-    public function setStandardMaxDate($standard_max_date)
+    public function setMeta($meta)
     {
-        $this->container['standard_max_date'] = $standard_max_date;
+        $this->container['meta'] = $meta;
 
         return $this;
     }
 
     /**
-     * Gets bing_max_date
-     * @return \DateTime
+     * Gets response
+     * @return \Yext\Client\Model\Asset
      */
-    public function getBingMaxDate()
+    public function getResponse()
     {
-        return $this->container['bing_max_date'];
+        return $this->container['response'];
     }
 
     /**
-     * Sets bing_max_date
-     * @param \DateTime $bing_max_date The date through which Bing data is available.
+     * Sets response
+     * @param \Yext\Client\Model\Asset $response
      * @return $this
      */
-    public function setBingMaxDate($bing_max_date)
+    public function setResponse($response)
     {
-        $this->container['bing_max_date'] = $bing_max_date;
+        $this->container['response'] = $response;
 
         return $this;
     }

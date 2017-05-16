@@ -6,31 +6,19 @@
  *
  * @category Class
  * @package  Yext\Client
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
+ * @author   Swaagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * Yext API
  *
- * 
+ * # Policies and Conventions  This section gives you the basic information you need to use our APIs.  ## API Availability  We currently offer three APIs: * **Knowledge API** * **Live API** * **Administrative API**  Each API is designed for a particular set of users.  To determine which APIs are available to users like you, see the \"Overview\" page in the Docs section of this site.  ## Authentication All requests must be authenticated using an app’s API key.  <pre>GET https://api.yext.com/v2/accounts/[accountId]/locations?<b>api_key=API_KEY</b>&v=YYYYMMDD</pre>  The API key should be kept secret.  ## Versioning All requests must be versioned using the **`v`** parameter.  <pre>GET https://api.yext.com/v2/accounts/[accountId]/locations?api_key=API_KEY&<b>v=YYYYMMDD</b></pre>  The **`v`** parameter (a date in `YYYYMMDD` format) is designed to give you the freedom to adapt to Yext API changes on your own schedule. When you pass this parameter, any backward-incompatiable changes we made to the API after the specified date will not affect the behavior of the request or the content of the response. You will still benefit from any bug fixes or backward-compatible changes we may have made after the date you've specified.  **NOTE:** Yext has the ability to make changes that affect previous versions of the API, if necessary.  ## Serialization API v2 only accepts data in JSON format.  ## Content-Type Headers For all requests that include a request body, the `Content-Type` header must be included and set to `application/json`.  ## PUT Requests Generally, all `PUT` operations behave as true RESTful `PUT`s, in which entire objects are overwritten with the provided content.  However, certain endpoints used to work with large, frequently-changing object models may have different semantics to prevent the accidental removal of content (e.g., Locations: Update lets you omit fields you don’t wish to change).  ## Errors and Warnings There are three kinds of issues that can be reported for a given request:  * **`FATAL_ERROR`**     * An issue caused the entire request to be rejected. * **`NON_FATAL_ERROR`**     * An item is rejected, but other items present in the request are accepted (e.g., one invalid Product List item).     * A field is rejected, but the item otherwise is accepted (e.g., invalid website URL in a Location). * **`WARNING`**     * The request did not adhere to our best practices or recommendations, but the data was accepted anyway (e.g., data was sent that may cause some listings to become unavailable, a deprecated API was used, or we changed the format of a field's content to meet our requirements).  **For a complete list of error codes and their meanings, see the \"Error Messages\" page in the Support section of this site.**  ## Validation Modes  API v2 will support two request validation modes: *Strict Mode* and *Lenient Mode*.  In Strict Mode, both `FATAL_ERROR`s and `NON_FATAL_ERROR`s are reported simply as `FATAL_ERROR`s, and any error will cause the entire request to fail.  In Lenient Mode, `FATAL_ERROR`s and `NON_FATAL_ERROR`s are reported as such, and only `FATAL_ERROR`s will cause a request to fail.  All requests will be processed in Strict Mode by default.  To activate Lenient Mode, append the parameter `validation=lenient` to your request URLs.  ### Dates and times * We always use milliseconds since epoch (a.k.a. Unix time) for timestamps (e.g., review creation times, webhook update times). * We always use ISO 8601 without timezone for local date times (e.g., Event start time, Event end time). Event times are always interpreted in the local timezone of their associated locations. * Dates are transmitted as strings: `YYYY-MM-DD`.  ## Account ID In keeping with RESTful design principles, every URL in API v2 has an account ID prefix. This prefix helps to ensure that you have unique URLs for all resources.  In addition to specifying resources by explicit account ID, the following two macros are defined: * **`me`** - refers to the account that owns the API key sent with the request * **`all`** - refers to the account that owns the API key sent with the request, as well as all sub-accounts (recursively)  **IMPORTANT:** The **`me`** macro is supported in all API methods.  The **`all`** macro will only be supported in certain URLs. Currently, it can only be used in Analytics and Reviews endpoints.  ### Examples This URL refers to an analytics report for all locations in account 123. <pre>https://api.yext.com/v2/accounts/<b>123</b>/analytics/reports?api_key=456&v=20160822</pre>  This URL refers to an analytics report for all locations in the account that owns API key 456. <pre>https://api.yext.com/v2/accounts/<b>me</b>/analytics/reports?<b>api_key=456</b>&v=20160822</pre>  This URL refers to an analytics report for all locations in the account that owns API key 456, as well as all locations from any of its child accounts. <pre>https://api.yext.com/v2/accounts/<b>all</b>/analytics/reports?<b>api_key=456</b>&v=20160822</pre>  ## Actor Headers  To attribute changes to a particular user, all `PUT`, `POST`, and `DELETE` requests may be passed with the following headers.  **NOTE:** If you choose to provide actor headers, and we are unable to authenticate the request using the values you provide, the request will result in an error and fail.  * Attribute activity to customer user via username     * Header: `Yext-Username`     * Value: Customer user’s username * Attribute activity to customer user via Yext user ID     * Header: `Yext-User-Id`     * Value: Customer user’s Yext user ID  Changes will be logged as follows:  * App with no designated actor     * History Entry \"Updated By\" Value: `App [App ID] - ‘[App Name]’`     * Example: `App 432 - ‘Hello World App’` * App with customer user actor     * History Entry \"Updated By\" Value: `[user name] ([user email]) (App [App ID] - ‘[App Name]’)`     * Example: `Jordan Smith (jsmith@example.com) (App 432 - ‘Hello World App’)`  ## Response Format * **`meta`**     * Response metadata * **`meta.uuid`**     * Unique ID for this request / response * **`meta.errors[]`**     * List of errors and warnings * **`meta.errors[].code`**     * Code that uniquely identifies the error or warning * **`meta.errors[].type`**     * One of:         * `FATAL_ERROR`         * `NON_FATAL_ERROR`         * `WARNING`     * See \"Errors and Warnings\" above for details. * **`meta.errors[].message`**     * An explanation of the issue * **`response`**     * The main content (body) of the response  Example: <pre><code> {     \"meta\": {         \"uuid\": \"bb0c7e19-4dc3-4891-bfa5-8593b1f124ad\",         \"errors\": [             {                 \"code\": ...error code...,                 \"type\": ...error, fatal error, non fatal error, or warning...,                 \"message\": ...explanation of the issue...             }         ]     },     \"response\": {         ...results...     } } </code></pre>  ## Status Codes * `200 OK`    * Either there are no errors or warnings, or the only issues are of type `WARNING`. * `207 Multi-Status`     * There are errors of type `itemError` or `fieldError` (but none of type `requestError`). * `400 Bad Request`     * A parameter is invalid, or a required parameter is missing. This includes the case where no API key is provided and the case where a resource ID is specified incorrectly in a path.     * This status is if any of the response errors are of type `requestError`. * `401 Unauthorized`     * The API key provided is invalid. * `403 Forbidden`     * The requested information cannot be viewed by the acting user. * `404 Not Found`     * The endpoint does not exist. * `405 Method Not Allowed`     * The request is using a method that is not allowed (e.g., `POST` with a `GET`-only endpoint). * `409 Conflict`     * The request could not be completed in its current state.     * Use the information included in the response to modify the request and retry. * `429 Too Many Requests`     * You have exceeded your rate limit / quota. * `500 Internal Server Error`     * Yext’s servers are not operating as expected. The request is likely valid but should be resent later. * `504 Timeout`     * Yext’s servers took too long to handle this request, and it timed out.  ## Quotas and Rate Limits Default quotas and rate limits are as follows.  * **Knowledge API** *(includes Analytics, PowerListings®, Knowledge Manager, Reviews, Social, and User endpoints)*: 5,000 requests per hour * **Administrative API**: 1,000 requests per hour * **Live API**: 100,000 requests per hour  Hourly quotas are calculated from the beginning of the hour (minute zero, `:00`), not on a rolling basis past 60 minutes.  **NOTE:** Webhook requests do not count towards an account’s quota.  For the most current and accurate rate-limit usage information for a particular request type, check the **`Rate-Limit-Remaining`** and **`Rate-Limit-Limit`** HTTP headers of your API responses.  If you are currently over your limit, our API will return a `429` error, and the response object returned by our API will be empty. We will also include a **`Rate-Limit-Reset`** header in the response, which indicates when you will have additional quota.  ## Client- vs. Yext-assigned IDs You can set the ID for the following objects when you create them. If you do not provide an ID, Yext will generate one for you.  * Account * User * Location * Bio List * Menu * Product List * Event List * Bio List Item * Menu Item * Product List Item * Event List Item  ## Logging All API requests are logged. API logs can be found in your Developer Console and are stored for 90 days.
  *
  * OpenAPI spec version: 2.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 /**
@@ -46,15 +34,15 @@ use \ArrayAccess;
 /**
  * PublisherSuggestion Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Yext\Client
- * @author      http://github.com/swagger-api/swagger-codegen
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
+ * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
 class PublisherSuggestion implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -66,16 +54,16 @@ class PublisherSuggestion implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'status' => 'string',
-        'original_content' => 'string',
-        'date_resolved' => '\DateTime',
-        'resolved_by' => 'string',
-        'date_created' => '\DateTime',
-        'location_id' => 'string',
-        'field_name' => 'string',
-        'suggested_content' => 'string',
+        'id' => 'string',
         'publisher_id' => 'string',
-        'id' => 'string'
+        'location_id' => 'string',
+        'date_created' => '\DateTime',
+        'date_resolved' => '\DateTime',
+        'field_name' => 'string',
+        'status' => 'string',
+        'resolved_by' => 'string',
+        'original_content' => 'string',
+        'suggested_content' => 'string'
     ];
 
     public static function swaggerTypes()
@@ -88,16 +76,16 @@ class PublisherSuggestion implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'status' => 'status',
-        'original_content' => 'originalContent',
-        'date_resolved' => 'dateResolved',
-        'resolved_by' => 'resolvedBy',
-        'date_created' => 'dateCreated',
-        'location_id' => 'locationId',
-        'field_name' => 'fieldName',
-        'suggested_content' => 'suggestedContent',
+        'id' => 'id',
         'publisher_id' => 'publisherId',
-        'id' => 'id'
+        'location_id' => 'locationId',
+        'date_created' => 'dateCreated',
+        'date_resolved' => 'dateResolved',
+        'field_name' => 'fieldName',
+        'status' => 'status',
+        'resolved_by' => 'resolvedBy',
+        'original_content' => 'originalContent',
+        'suggested_content' => 'suggestedContent'
     ];
 
 
@@ -106,16 +94,16 @@ class PublisherSuggestion implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'status' => 'setStatus',
-        'original_content' => 'setOriginalContent',
-        'date_resolved' => 'setDateResolved',
-        'resolved_by' => 'setResolvedBy',
-        'date_created' => 'setDateCreated',
-        'location_id' => 'setLocationId',
-        'field_name' => 'setFieldName',
-        'suggested_content' => 'setSuggestedContent',
+        'id' => 'setId',
         'publisher_id' => 'setPublisherId',
-        'id' => 'setId'
+        'location_id' => 'setLocationId',
+        'date_created' => 'setDateCreated',
+        'date_resolved' => 'setDateResolved',
+        'field_name' => 'setFieldName',
+        'status' => 'setStatus',
+        'resolved_by' => 'setResolvedBy',
+        'original_content' => 'setOriginalContent',
+        'suggested_content' => 'setSuggestedContent'
     ];
 
 
@@ -124,16 +112,16 @@ class PublisherSuggestion implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'status' => 'getStatus',
-        'original_content' => 'getOriginalContent',
-        'date_resolved' => 'getDateResolved',
-        'resolved_by' => 'getResolvedBy',
-        'date_created' => 'getDateCreated',
-        'location_id' => 'getLocationId',
-        'field_name' => 'getFieldName',
-        'suggested_content' => 'getSuggestedContent',
+        'id' => 'getId',
         'publisher_id' => 'getPublisherId',
-        'id' => 'getId'
+        'location_id' => 'getLocationId',
+        'date_created' => 'getDateCreated',
+        'date_resolved' => 'getDateResolved',
+        'field_name' => 'getFieldName',
+        'status' => 'getStatus',
+        'resolved_by' => 'getResolvedBy',
+        'original_content' => 'getOriginalContent',
+        'suggested_content' => 'getSuggestedContent'
     ];
 
     public static function attributeMap()
@@ -185,16 +173,16 @@ class PublisherSuggestion implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['original_content'] = isset($data['original_content']) ? $data['original_content'] : null;
-        $this->container['date_resolved'] = isset($data['date_resolved']) ? $data['date_resolved'] : null;
-        $this->container['resolved_by'] = isset($data['resolved_by']) ? $data['resolved_by'] : null;
-        $this->container['date_created'] = isset($data['date_created']) ? $data['date_created'] : null;
-        $this->container['location_id'] = isset($data['location_id']) ? $data['location_id'] : null;
-        $this->container['field_name'] = isset($data['field_name']) ? $data['field_name'] : null;
-        $this->container['suggested_content'] = isset($data['suggested_content']) ? $data['suggested_content'] : null;
-        $this->container['publisher_id'] = isset($data['publisher_id']) ? $data['publisher_id'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['publisher_id'] = isset($data['publisher_id']) ? $data['publisher_id'] : null;
+        $this->container['location_id'] = isset($data['location_id']) ? $data['location_id'] : null;
+        $this->container['date_created'] = isset($data['date_created']) ? $data['date_created'] : null;
+        $this->container['date_resolved'] = isset($data['date_resolved']) ? $data['date_resolved'] : null;
+        $this->container['field_name'] = isset($data['field_name']) ? $data['field_name'] : null;
+        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['resolved_by'] = isset($data['resolved_by']) ? $data['resolved_by'] : null;
+        $this->container['original_content'] = isset($data['original_content']) ? $data['original_content'] : null;
+        $this->container['suggested_content'] = isset($data['suggested_content']) ? $data['suggested_content'] : null;
     }
 
     /**
@@ -205,9 +193,10 @@ class PublisherSuggestion implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+
         $allowed_values = ["WAITING_ON_CUSTOMER", "ACCEPTED", "REJECTED", "EXPIRED"];
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'status', must be one of #{allowed_values}.";
+        if (!in_array($this->container['status'], $allowed_values)) {
+            $invalid_properties[] = "invalid value for 'status', must be one of 'WAITING_ON_CUSTOMER', 'ACCEPTED', 'REJECTED', 'EXPIRED'.";
         }
 
         return $invalid_properties;
@@ -217,17 +206,144 @@ class PublisherSuggestion implements ArrayAccess
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properteis are valid
+     * @return bool True if all properties are valid
      */
     public function valid()
     {
+
         $allowed_values = ["WAITING_ON_CUSTOMER", "ACCEPTED", "REJECTED", "EXPIRED"];
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowed_values)) {
+        if (!in_array($this->container['status'], $allowed_values)) {
             return false;
         }
         return true;
     }
 
+
+    /**
+     * Gets id
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     * @param string $id ID of this Publisher Suggestion
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets publisher_id
+     * @return string
+     */
+    public function getPublisherId()
+    {
+        return $this->container['publisher_id'];
+    }
+
+    /**
+     * Sets publisher_id
+     * @param string $publisher_id ID of the publisher who submitted the suggestion
+     * @return $this
+     */
+    public function setPublisherId($publisher_id)
+    {
+        $this->container['publisher_id'] = $publisher_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets location_id
+     * @return string
+     */
+    public function getLocationId()
+    {
+        return $this->container['location_id'];
+    }
+
+    /**
+     * Sets location_id
+     * @param string $location_id ID of the location the suggestion is for
+     * @return $this
+     */
+    public function setLocationId($location_id)
+    {
+        $this->container['location_id'] = $location_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets date_created
+     * @return \DateTime
+     */
+    public function getDateCreated()
+    {
+        return $this->container['date_created'];
+    }
+
+    /**
+     * Sets date_created
+     * @param \DateTime $date_created The date Yext received the suggestion
+     * @return $this
+     */
+    public function setDateCreated($date_created)
+    {
+        $this->container['date_created'] = $date_created;
+
+        return $this;
+    }
+
+    /**
+     * Gets date_resolved
+     * @return \DateTime
+     */
+    public function getDateResolved()
+    {
+        return $this->container['date_resolved'];
+    }
+
+    /**
+     * Sets date_resolved
+     * @param \DateTime $date_resolved The date the suggestion expired or was accepted or rejected
+     * @return $this
+     */
+    public function setDateResolved($date_resolved)
+    {
+        $this->container['date_resolved'] = $date_resolved;
+
+        return $this;
+    }
+
+    /**
+     * Gets field_name
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return $this->container['field_name'];
+    }
+
+    /**
+     * Sets field_name
+     * @param string $field_name The location field the suggestion is for
+     * @return $this
+     */
+    public function setFieldName($field_name)
+    {
+        $this->container['field_name'] = $field_name;
+
+        return $this;
+    }
 
     /**
      * Gets status
@@ -255,48 +371,6 @@ class PublisherSuggestion implements ArrayAccess
     }
 
     /**
-     * Gets original_content
-     * @return string
-     */
-    public function getOriginalContent()
-    {
-        return $this->container['original_content'];
-    }
-
-    /**
-     * Sets original_content
-     * @param string $original_content The content that the publisher suggested to change
-     * @return $this
-     */
-    public function setOriginalContent($original_content)
-    {
-        $this->container['original_content'] = $original_content;
-
-        return $this;
-    }
-
-    /**
-     * Gets date_resolved
-     * @return \DateTime
-     */
-    public function getDateResolved()
-    {
-        return $this->container['date_resolved'];
-    }
-
-    /**
-     * Sets date_resolved
-     * @param \DateTime $date_resolved The date the suggestion expired or was accepted or rejected
-     * @return $this
-     */
-    public function setDateResolved($date_resolved)
-    {
-        $this->container['date_resolved'] = $date_resolved;
-
-        return $this;
-    }
-
-    /**
      * Gets resolved_by
      * @return string
      */
@@ -318,64 +392,22 @@ class PublisherSuggestion implements ArrayAccess
     }
 
     /**
-     * Gets date_created
-     * @return \DateTime
-     */
-    public function getDateCreated()
-    {
-        return $this->container['date_created'];
-    }
-
-    /**
-     * Sets date_created
-     * @param \DateTime $date_created The date Yext received the suggestion
-     * @return $this
-     */
-    public function setDateCreated($date_created)
-    {
-        $this->container['date_created'] = $date_created;
-
-        return $this;
-    }
-
-    /**
-     * Gets location_id
+     * Gets original_content
      * @return string
      */
-    public function getLocationId()
+    public function getOriginalContent()
     {
-        return $this->container['location_id'];
+        return $this->container['original_content'];
     }
 
     /**
-     * Sets location_id
-     * @param string $location_id ID of the location the suggestion is for
+     * Sets original_content
+     * @param string $original_content The content that the publisher suggested to change
      * @return $this
      */
-    public function setLocationId($location_id)
+    public function setOriginalContent($original_content)
     {
-        $this->container['location_id'] = $location_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets field_name
-     * @return string
-     */
-    public function getFieldName()
-    {
-        return $this->container['field_name'];
-    }
-
-    /**
-     * Sets field_name
-     * @param string $field_name The location field the suggestion is for
-     * @return $this
-     */
-    public function setFieldName($field_name)
-    {
-        $this->container['field_name'] = $field_name;
+        $this->container['original_content'] = $original_content;
 
         return $this;
     }
@@ -397,48 +429,6 @@ class PublisherSuggestion implements ArrayAccess
     public function setSuggestedContent($suggested_content)
     {
         $this->container['suggested_content'] = $suggested_content;
-
-        return $this;
-    }
-
-    /**
-     * Gets publisher_id
-     * @return string
-     */
-    public function getPublisherId()
-    {
-        return $this->container['publisher_id'];
-    }
-
-    /**
-     * Sets publisher_id
-     * @param string $publisher_id ID of the publisher who submitted the suggestion
-     * @return $this
-     */
-    public function setPublisherId($publisher_id)
-    {
-        $this->container['publisher_id'] = $publisher_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     * @param string $id ID of this Publisher Suggestion
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
 
         return $this;
     }
@@ -500,3 +490,5 @@ class PublisherSuggestion implements ArrayAccess
         return json_encode(\Yext\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+
