@@ -3355,10 +3355,16 @@ class KnowledgeManagerApi
             $httpBody = $formParams; // for HTTP post (form)
         }
         // this endpoint requires API key authentication
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
-        if (strlen($apiKey) !== 0) {
-            $queryParams['api_key'] = $apiKey;
+        $accessToken = $this->apiClient->getConfig()->getAccessToken();
+        if($accessToken){
+            $queryParams['access_token'] = $accessToken;
+        } else {
+            $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
+            if (strlen($apiKey) !== 0) {
+                $queryParams['api_key'] = $apiKey;
+            }
         }
+        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
