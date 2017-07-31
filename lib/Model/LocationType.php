@@ -47,6 +47,15 @@ class LocationType {
     const HEALTHCARE_FACILITY = 'HEALTHCARE_FACILITY';
     
 
-    
+    /**
+      * Array of property to type mappings. Used for (de)serialization
+      * @var string[]
+      */
+    protected static $swaggerTypes = [];
+
+    public static function swaggerTypes()
+    {
+        return self::$swaggerTypes;
+    }
 }
 
