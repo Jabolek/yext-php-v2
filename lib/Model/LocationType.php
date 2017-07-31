@@ -40,6 +40,8 @@ use \ArrayAccess;
  * @link        https://github.com/swagger-api/swagger-codegen
  */
 class LocationType {
+    const DISCRIMINATOR = null;
+    
     const LOCATION = 'LOCATION';
     const HEALTHCARE_PROFESSIONAL = 'HEALTHCARE_PROFESSIONAL';
     const HEALTHCARE_FACILITY = 'HEALTHCARE_FACILITY';
